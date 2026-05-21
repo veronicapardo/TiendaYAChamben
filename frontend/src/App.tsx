@@ -6,6 +6,7 @@ import "./styles/login.css";
 import { RoleSelectionPage } from "./pages/RoleSelectionPage";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardCajeroPage } from "./pages/cajero/DashboardCajeroPage";
+import { Dashboard_de_admin } from "./pages/admin/Dashboard_de_admin"; 
 
 export type RolUsuario = "CLIENTE" | "CAJERO" | "REPARTIDOR" | "ADMINISTRADOR";
 
@@ -19,6 +20,10 @@ export type UsuarioLogueado = {
 function App() {
   const [rolSeleccionado, setRolSeleccionado] = useState<RolUsuario | null>(null);
   const [usuarioLogueado, setUsuarioLogueado] = useState<UsuarioLogueado | null>(null);
+
+  if (usuarioLogueado?.rol === "ADMINISTRADOR" || usuarioLogueado?.rol === "DUENO" ) {
+    return <Dashboard_de_admin usuario={usuarioLogueado} setUsuarioLogueado={setUsuarioLogueado} />;
+  }
 
   if (usuarioLogueado?.rol === "CAJERO") {
     return <DashboardCajeroPage usuario={usuarioLogueado} />;

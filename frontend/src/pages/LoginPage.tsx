@@ -34,6 +34,8 @@ export function LoginPage({ rol, onVolver, onLoginCorrecto }: Props) {
         password: contrasenia,
         rol: convertirRolABackend(rol),
       });
+      
+      console.log("RESPUESTA LOGIN:", respuesta);
 
       onLoginCorrecto(respuesta);
     } catch (error) {

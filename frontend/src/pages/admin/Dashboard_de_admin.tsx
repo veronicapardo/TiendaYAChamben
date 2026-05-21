@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "../../styles/dashboardadmin.css";
-
 import { DashboardView } from "./views/DashboardView";
 import { StockPage } from "./views/StockPage";
-
+import { PedidosPage } from "./views/PedidosPage";
+import { ProveedoresPage } from "./views/ProveedoresPage";
+import { ReportesPage } from "./views/ReportesPage";
 interface DashboardDeAdminProps {
   usuario: any;
   setUsuarioLogueado: (usuario: any) => void;
@@ -14,7 +15,11 @@ export const Dashboard_de_admin = ({
   setUsuarioLogueado,
 }: DashboardDeAdminProps) => {
   const [pestañaActual, setPestañaActual] = useState<
-    "dashboard" | "stock"
+  "dashboard" |
+  "stock" |
+  "pedidos" |
+  "proveedores" |
+  "reportes"
   >("dashboard");
 
   return (
@@ -47,15 +52,24 @@ export const Dashboard_de_admin = ({
             Stock
           </button>
 
-          <button className="menu-btn">
-            Pedidos
+          <button
+            onClick={() => setPestañaActual("pedidos")}
+            className={`menu-btn ${pestañaActual === "pedidos" ? "active" : ""}`}
+          >
+            Pedidos recientes
           </button>
 
-          <button className="menu-btn">
+          <button
+            onClick={() => setPestañaActual("proveedores")}
+            className={`menu-btn ${pestañaActual === "proveedores" ? "active" : ""}`}
+          >
             Proveedores
           </button>
 
-          <button className="menu-btn">
+          <button
+            onClick={() => setPestañaActual("reportes")}
+            className={`menu-btn ${pestañaActual === "reportes" ? "active" : ""}`}
+          >
             Reportes
           </button>
 
@@ -78,29 +92,20 @@ export const Dashboard_de_admin = ({
 
       </aside>
 
-      {/* CONTENIDO */}
-      <main className="main-content">
+      
+    <section className="content-area">
 
-        <header className="topbar">
-          <h1>Dashboard</h1>
-        </header>
+  {pestañaActual === "dashboard" && <DashboardView />}
 
-        <section className="welcome-card">
-          <h2>¡Bienvenido, Administrador! 👋</h2>
-          <p>
-            Aquí tienes el resumen de tu tienda del día de hoy.
-          </p>
-        </section>
+  {pestañaActual === "stock" && <StockPage />}
 
-        <section className="content-area">
-          {pestañaActual === "dashboard" ? (
-            <DashboardView />
-          ) : (
-            <StockPage />
-          )}
-        </section>
+  {pestañaActual === "pedidos" && <PedidosPage />}
 
-      </main>
+  {pestañaActual === "proveedores" && <ProveedoresPage />}
+
+  {pestañaActual === "reportes" && <ReportesPage />}
+
+</section>
     </div>
   );
 };

@@ -1,0 +1,16 @@
+.reportes-container{
+  padding:20px;
+}
+
+.report-cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.report-card{
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}

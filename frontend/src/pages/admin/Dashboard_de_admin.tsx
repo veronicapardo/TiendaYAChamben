@@ -1,10 +1,13 @@
 import { useState } from "react";
+
 import "../../styles/dashboardadmin.css";
+
 import { DashboardView } from "./views/DashboardView";
 import { StockPage } from "./views/StockPage";
 import { PedidosPage } from "./views/PedidosPage";
 import { ProveedoresPage } from "./views/ProveedoresPage";
 import { ReportesPage } from "./views/ReportesPage";
+
 interface DashboardDeAdminProps {
   usuario: any;
   setUsuarioLogueado: (usuario: any) => void;
@@ -14,12 +17,13 @@ export const Dashboard_de_admin = ({
   usuario,
   setUsuarioLogueado,
 }: DashboardDeAdminProps) => {
+
   const [pestañaActual, setPestañaActual] = useState<
-  "dashboard" |
-  "stock" |
-  "pedidos" |
-  "proveedores" |
-  "reportes"
+    "dashboard" |
+    "stock" |
+    "pedidos" |
+    "proveedores" |
+    "reportes"
   >("dashboard");
 
   return (
@@ -40,7 +44,7 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("dashboard")}
           >
-            Dashboard
+            Panel
           </button>
 
           <button
@@ -49,37 +53,40 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("stock")}
           >
-            Stock
+            Existencias
           </button>
 
           <button
+            className={`menu-btn ${
+              pestañaActual === "pedidos" ? "active" : ""
+            }`}
             onClick={() => setPestañaActual("pedidos")}
-            className={`menu-btn ${pestañaActual === "pedidos" ? "active" : ""}`}
           >
             Pedidos recientes
           </button>
 
           <button
+            className={`menu-btn ${
+              pestañaActual === "proveedores" ? "active" : ""
+            }`}
             onClick={() => setPestañaActual("proveedores")}
-            className={`menu-btn ${pestañaActual === "proveedores" ? "active" : ""}`}
           >
             Proveedores
           </button>
 
           <button
+            className={`menu-btn ${
+              pestañaActual === "reportes" ? "active" : ""
+            }`}
             onClick={() => setPestañaActual("reportes")}
-            className={`menu-btn ${pestañaActual === "reportes" ? "active" : ""}`}
           >
-            Reportes
-          </button>
-
-          <button className="menu-btn">
-            Configuración
+            Informes
           </button>
 
         </nav>
 
         <div className="admin-user">
+
           <span>{usuario.nombre}</span>
 
           <button
@@ -88,24 +95,43 @@ export const Dashboard_de_admin = ({
           >
             Salir
           </button>
+
         </div>
 
       </aside>
 
-      
-    <section className="content-area">
+      <main className="main-content">
 
-  {pestañaActual === "dashboard" && <DashboardView />}
+        <header className="topbar">
 
-  {pestañaActual === "stock" && <StockPage />}
+          <h1>
 
-  {pestañaActual === "pedidos" && <PedidosPage />}
+            {pestañaActual === "dashboard" && "Panel"}
+            {pestañaActual === "stock" && "Existencias"}
+            {pestañaActual === "pedidos" && "Pedidos recientes"}
+            {pestañaActual === "proveedores" && "Proveedores"}
+            {pestañaActual === "reportes" && "Informes"}
 
-  {pestañaActual === "proveedores" && <ProveedoresPage />}
+          </h1>
 
-  {pestañaActual === "reportes" && <ReportesPage />}
+        </header>
 
-</section>
+        <section className="content-area">
+
+          {pestañaActual === "dashboard" && <DashboardView />}
+
+          {pestañaActual === "stock" && <StockPage />}
+
+          {pestañaActual === "pedidos" && <PedidosPage />}
+
+          {pestañaActual === "proveedores" && <ProveedoresPage />}
+
+          {pestañaActual === "reportes" && <ReportesPage />}
+
+        </section>
+
+      </main>
+
     </div>
   );
 };

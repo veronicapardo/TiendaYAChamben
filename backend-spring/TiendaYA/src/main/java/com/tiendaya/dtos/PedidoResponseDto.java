@@ -1,5 +1,6 @@
 package com.tiendaya.dtos;
 
+import com.tiendaya.models.Pedido;
 import com.tiendaya.models.enums.EstadoPedido;
 
 import java.math.BigDecimal;
@@ -20,4 +21,20 @@ public record PedidoResponseDto(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
+    public static PedidoResponseDto fromPedido(Pedido pedido) {
+        return new PedidoResponseDto(
+                pedido.getId(),
+                pedido.getCliente().getId(),
+                pedido.getCliente().getNombre(),
+                pedido.getRepartidor() != null ? pedido.getRepartidor().getId() : null,
+                pedido.getRepartidor() != null ? pedido.getRepartidor().getNombre() : null,
+                pedido.getFechaHora(),
+                pedido.getDireccionEntrega(),
+                pedido.getEstado(),
+                pedido.getTotal(),
+                PedidoDetalleResponseDto.fromDetalles(pedido.getDetalles()),
+                pedido.getCreatedAt(),
+                pedido.getUpdatedAt()
+        );
+    }
 }

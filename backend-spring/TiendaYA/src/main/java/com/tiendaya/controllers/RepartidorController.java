@@ -11,6 +11,10 @@ import com.tiendaya.models.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.tiendaya.interfaces.IPedidoService;
+import com.tiendaya.models.Pedido;
+import com.tiendaya.dtos.PedidoResponseDto;
+import com.tiendaya.dtos.PedidoDetalleResponseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +24,14 @@ import java.util.Optional;
 public class RepartidorController {
 
     private final IRepartidorService repartidorService;
+    private final IPedidoService pedidoService;
 
-    public RepartidorController(IRepartidorService repartidorService) {
+    public RepartidorController(
+        IRepartidorService repartidorService,
+        IPedidoService pedidoService
+    ) {
         this.repartidorService = repartidorService;
+        this.pedidoService = pedidoService;
     }
 
     @GetMapping
@@ -34,7 +43,20 @@ public class RepartidorController {
 
         return ResponseEntity.ok(repartidores);
     }
+    @GetMapping("/{id}/pedidos")
+    public ResponseEntity<List<PedidoResponseDto>>
+    getPedidosDelRepartidor(
+            @PathVariable Integer id
+    ) {
 
+        List<PedidoResponseDto> pedidos =
+            pedidoService
+                .getPedidosPorRepartidor(id)
+                .stream()
+                .map(this::convertirPedidoAResponseDto)
+                .toList();
+    return ResponseEntity.ok(pedidos);
+}
     @GetMapping("/disponibles")
     public ResponseEntity<List<RepartidorResponseDto>> getRepartidoresDisponibles() {
         List<RepartidorResponseDto> repartidores = repartidorService.getRepartidoresDisponibles()

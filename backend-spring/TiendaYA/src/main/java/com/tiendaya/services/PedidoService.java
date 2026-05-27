@@ -17,7 +17,6 @@ import com.tiendaya.dtos.CreatePedidoRapidoDto;
 import com.tiendaya.dtos.PedidoProductoDto;
 import com.tiendaya.models.Cliente;
 import com.tiendaya.models.Pedido;
-import com.tiendaya.models.PedidoDetalle;
 import com.tiendaya.models.Producto;
 import com.tiendaya.models.Repartidor;
 import com.tiendaya.models.enums.EstadoPedido;

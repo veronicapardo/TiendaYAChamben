@@ -31,7 +31,7 @@ export function CarritoClientePage({ onNavigate, carrito = [], onActualizarCanti
 
   const irAlFormularioCheckout = () => {
     if (!metodoPago) return;
-    onNavigate("checkout-form");
+    onNavigate("checkout");
   };
 
   return (

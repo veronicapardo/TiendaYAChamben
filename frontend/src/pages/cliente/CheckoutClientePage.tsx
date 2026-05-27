@@ -55,7 +55,7 @@ export function CheckoutClientePage({ onNavigate }: Props) {
     */
 
     alert("Pedido realizado correctamente");
-    onNavigate("mis-pedidos");
+    onNavigate("pedidos");
   }
 
   function cancelarPedido() {

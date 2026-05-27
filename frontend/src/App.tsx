@@ -35,18 +35,51 @@ function App() {
   const [usuarioLogueado, setUsuarioLogueado] = useState<UsuarioLogueado | null>(null);
   const [vistaCajero, setVistaCajero] = useState<VistaCajero>("dashboard");
    //cliente
-  const [vistaCliente, setVistaCliente] =useState("home"); 
+  const [vistaCliente, setVistaCliente] =useState("home");
+  const [carrito, setCarrito] = useState<
+  Array<{ id: number; cantidad: number }>
+> ([]); 
+function actualizarCantidadCarrito(
+  id: number,
+  cambio: number
+) {
+  setCarrito((prev) => {
+    const existente = prev.find((p) => p.id === id);
+
+    // SI NO EXISTE Y QUIERE AÑADIR
+    if (!existente && cambio > 0) {
+      return [...prev, { id, cantidad: 1 }];
+    }
+
+    // SI YA EXISTE
+    return prev
+      .map((p) =>
+        p.id === id
+          ? { ...p, cantidad: p.cantidad + cambio }
+          : p
+      )
+      .filter((p) => p.cantidad > 0);
+  });
+}
    if (usuarioLogueado?.rol === "CLIENTE") {
 
   if (vistaCliente === "home") {
     return (
-      <HomeClientePage onNavigate={setVistaCliente} />
+      <HomeClientePage
+        onNavigate={setVistaCliente}
+        carrito={carrito}
+        onActualizarCantidad={actualizarCantidadCarrito}
+      />
     );
   }
 
   if (vistaCliente === "productos") {
     return (
-      <ProductosClientePage onNavigate={setVistaCliente} />
+      <ProductosClientePage
+        onNavigate={setVistaCliente}
+        carrito={carrito}
+        onActualizarCantidad={actualizarCantidadCarrito}
+      />
     );
   }
 

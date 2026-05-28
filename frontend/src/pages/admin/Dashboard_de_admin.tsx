@@ -8,6 +8,15 @@ import { PedidosPage } from "./views/PedidosPage";
 import { ProveedoresPage } from "./views/ProveedoresPage";
 import { ReportesPage } from "./views/ReportesPage";
 
+import {
+  LayoutDashboard,
+  Package,
+  ClipboardList,
+  Users,
+  BarChart3,
+  Settings,
+} from "lucide-react";
+
 interface DashboardDeAdminProps {
   usuario: any;
   setUsuarioLogueado: (usuario: any) => void;
@@ -26,14 +35,21 @@ export const Dashboard_de_admin = ({
     "reportes"
   >("dashboard");
 
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
   return (
     <div className="admin-layout">
 
-      {/* SIDEBAR */}
       <aside className="sidebar">
 
         <div className="logo-container">
-          <h2 className="logo-text">TiendaYa</h2>
+
+          <img
+            src="/logo.svg"
+            alt="Logo TiendaYa"
+            className="logo-img"
+          />
+
         </div>
 
         <nav className="menu">
@@ -44,7 +60,8 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("dashboard")}
           >
-            Panel
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
           </button>
 
           <button
@@ -53,7 +70,8 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("stock")}
           >
-            Existencias
+            <Package size={20} />
+            <span>Stock</span>
           </button>
 
           <button
@@ -62,7 +80,8 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("pedidos")}
           >
-            Pedidos recientes
+            <ClipboardList size={20} />
+            <span>Pedidos recientes</span>
           </button>
 
           <button
@@ -71,7 +90,8 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("proveedores")}
           >
-            Proveedores
+            <Users size={20} />
+            <span>Proveedores</span>
           </button>
 
           <button
@@ -80,41 +100,66 @@ export const Dashboard_de_admin = ({
             }`}
             onClick={() => setPestañaActual("reportes")}
           >
-            Informes
+            <BarChart3 size={20} />
+            <span>Reportes</span>
+          </button>
+
+          <button className="menu-btn">
+            <Settings size={20} />
+            <span>Configuración</span>
           </button>
 
         </nav>
 
-        <div className="admin-user">
-
-          <span>{usuario.nombre}</span>
+        <div className="admin-user-modern">
 
           <button
-            className="logout-btn"
-            onClick={() => setUsuarioLogueado(null)}
+            className="admin-dropdown"
+            onClick={() => setMenuAbierto(!menuAbierto)}
           >
-            Salir
+
+            <div className="admin-left">
+
+              <div className="admin-circle">
+                A
+              </div>
+
+              <span>Administrador</span>
+
+            </div>
+
+            <span>▼</span>
+
           </button>
+
+          {menuAbierto && (
+
+            <div className="dropdown-menu">
+
+              <button>
+                Perfil
+              </button>
+
+              <button>
+                Configuración
+              </button>
+
+              <button
+                className="logout-item"
+                onClick={() => setUsuarioLogueado(null)}
+              >
+                Cerrar sesión
+              </button>
+
+            </div>
+
+          )}
 
         </div>
 
       </aside>
 
       <main className="main-content">
-
-        <header className="topbar">
-
-          <h1>
-
-            {pestañaActual === "dashboard" && "Panel"}
-            {pestañaActual === "stock" && "Existencias"}
-            {pestañaActual === "pedidos" && "Pedidos recientes"}
-            {pestañaActual === "proveedores" && "Proveedores"}
-            {pestañaActual === "reportes" && "Informes"}
-
-          </h1>
-
-        </header>
 
         <section className="content-area">
 

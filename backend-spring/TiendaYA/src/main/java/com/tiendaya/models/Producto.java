@@ -27,14 +27,21 @@ public class Producto {
     @Column(name = "\"fechaVencimiento\"")
     private LocalDateTime fechaVencimiento;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(nullable = false)
     private Boolean activo = true;
 
     @Column(name = "\"createdAt\"", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+
     @Column(name = "\"updatedAt\"", nullable = false)
     private LocalDateTime updatedAt;
+
+
+
 
     public Producto() {
     }
@@ -116,5 +123,13 @@ public class Producto {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

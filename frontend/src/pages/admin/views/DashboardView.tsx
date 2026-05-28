@@ -1,159 +1,205 @@
+import { useEffect, useState } from "react";
 import "../../../styles/dashboardadmin.css";
-
 import {
   ResponsiveContainer,
   AreaChart,
   Area,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
 } from "recharts";
+import {
+  obtenerVentas,
+  obtenerPedidosAdmin,
+  obtenerTodosLosProductos,
+  type VentaResponseDto,
+  type PedidoAdminDto,
+  type ProductoResponseDto,
+} from "../../../services/api";
 
-const data = [
-  { dia: "14 May", ventas: 400 },
-  { dia: "15 May", ventas: 1200 },
-  { dia: "16 May", ventas: 1900 },
-  { dia: "17 May", ventas: 1200 },
-  { dia: "18 May", ventas: 2300 },
-  { dia: "19 May", ventas: 1600 },
-  { dia: "20 May", ventas: 2400 },
-];
+// Umbral de "stock bajo" (puedes ajustarlo)
+const STOCK_BAJO_UMBRAL = 10;
 
 export function DashboardView() {
+  const [ventas, setVentas] = useState<VentaResponseDto[]>([]);
+  const [pedidos, setPedidos] = useState<PedidoAdminDto[]>([]);
+  const [productos, setProductos] = useState<ProductoResponseDto[]>([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function cargarDatos() {
+      try {
+        const [v, p, pr] = await Promise.all([
+          obtenerVentas(),
+          obtenerPedidosAdmin(),
+          obtenerTodosLosProductos(),
+        ]);
+        setVentas(v);
+        setPedidos(p);
+        setProductos(pr);
+      } catch (e: any) {
+        setError(e.message);
+      } finally {
+        setCargando(false);
+      }
+    }
+    cargarDatos();
+  }, []);
+
+  // --- CALCULOS ---
+  const hoy = new Date().toDateString();
+
+  // Ventas del día (ventas completadas hoy)
+  const ventasHoy = ventas
+    .filter(
+      (v) =>
+        v.estadoVenta === "COMPLETADA" &&
+        new Date(v.fechaVenta).toDateString() === hoy
+    )
+    .reduce((acc, v) => acc + Number(v.montoTotal), 0);
+
+  // Pedidos del día
+  const pedidosHoy = pedidos.filter(
+    (p) => new Date(p.fechaHora).toDateString() === hoy
+  ).length;
+
+  // Clientes únicos atendidos hoy
+  const clientesHoy = new Set(
+    pedidos
+      .filter((p) => new Date(p.fechaHora).toDateString() === hoy)
+      .map((p) => p.clienteId)
+  ).size;
+
+  // Ventas de los últimos 7 días para el gráfico
+  const ultimos7Dias = Array.from({ length: 7 }, (_, i) => {
+    const fecha = new Date();
+    fecha.setDate(fecha.getDate() - (6 - i));
+    const label = fecha.toLocaleDateString("es-BO", {
+      day: "numeric",
+      month: "short",
+    });
+    const totalDia = ventas
+      .filter(
+        (v) =>
+          v.estadoVenta === "COMPLETADA" &&
+          new Date(v.fechaVenta).toDateString() === fecha.toDateString()
+      )
+      .reduce((acc, v) => acc + Number(v.montoTotal), 0);
+    return { dia: label, ventas: totalDia };
+  });
+
+  // Productos con stock bajo
+  const stockBajo = productos
+    .filter((p) => p.activo && p.stock <= STOCK_BAJO_UMBRAL && p.stock > 0)
+    .slice(0, 4);
+
+  // Pedidos recientes (últimos 3)
+  const pedidosRecientes = [...pedidos]
+    .sort(
+      (a, b) =>
+        new Date(b.fechaHora).getTime() - new Date(a.fechaHora).getTime()
+    )
+    .slice(0, 3);
+
+  const getEstadoClase = (estado: string) => {
+    if (estado === "EN_PREPARACION") return "estado preparando";
+    if (estado === "EN_CAMINO") return "estado camino";
+    if (estado === "ENTREGADO") return "estado entregado";
+    return "estado preparando";
+  };
+
+  const getEstadoLabel = (estado: string) => {
+    const labels: Record<string, string> = {
+      PENDIENTE: "Pendiente",
+      EN_PREPARACION: "En preparación",
+      LISTO_PARA_ENTREGAR: "Listo",
+      EN_CAMINO: "En camino",
+      ENTREGADO: "Entregado",
+      CANCELADO: "Cancelado",
+      ENTREGA_FALLIDA: "Fallido",
+    };
+    return labels[estado] || estado;
+  };
+
+  if (cargando) return <div className="dashboard-container"><p>Cargando...</p></div>;
+  if (error) return <div className="dashboard-container"><p style={{ color: "red" }}>Error: {error}</p></div>;
+
   return (
     <div className="dashboard-container">
-
-      {/* CARDS */}
+      {/* TARJETAS */}
       <div className="dashboard-cards">
-
         <div className="dashboard-card">
           <div>
             <h4>Ventas del Día</h4>
-            <h2>Bs/ 2,340.50</h2>
-            <p className="green">12,5% vs ayer</p>
+            <h2>Bs/ {ventasHoy.toFixed(2)}</h2>
           </div>
-
           <span className="card-icon">💳</span>
         </div>
 
         <div className="dashboard-card">
           <div>
             <h4>Pedidos del Día</h4>
-            <h2>28</h2>
-            <p className="green">8,2% vs ayer</p>
+            <h2>{pedidosHoy}</h2>
           </div>
-
           <span className="card-icon">👜</span>
         </div>
 
         <div className="dashboard-card">
           <div>
             <h4>Clientes atendidos</h4>
-            <h2>18</h2>
-            <p className="green">8,2% vs ayer</p>
+            <h2>{clientesHoy}</h2>
           </div>
-
           <span className="card-icon">👥</span>
         </div>
-
       </div>
 
-      {/* CONTENIDO */}
+      {/* GRÁFICO + STOCK BAJO */}
       <div className="dashboard-grid">
-
-        {/* GRAFICA */}
         <div className="chart-box">
           <h3>Ventas de los últimos 7 días</h3>
-
           <div className="chart-real">
-
             <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={data}>
-
+              <AreaChart data={ultimos7Dias}>
                 <XAxis dataKey="dia" />
                 <YAxis />
-
-                <Tooltip />
-
+                <Tooltip formatter={(v: unknown) => [`Bs/ ${Number(v).toFixed(2)}`, "Ventas"]} />
                 <Area
                   type="monotone"
                   dataKey="ventas"
                   stroke="#f59e0b"
                   fill="#fde68a"
                 />
-
-                <Line
-                  type="monotone"
-                  dataKey="ventas"
-                  stroke="#f59e0b"
-                  strokeWidth={3}
-                />
-
               </AreaChart>
             </ResponsiveContainer>
-
           </div>
         </div>
 
-        {/* STOCK BAJO */}
         <div className="stock-box">
-
           <div className="stock-header">
             <h3>Productos con stock bajo</h3>
-            <span>Ver todos</span>
           </div>
 
-          <div className="stock-item">
-            <img
-              src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200"
-              alt=""
-            />
-
-            <div>
-              <p>Nuggets Dino Sofia 1 kg</p>
-            </div>
-
-            <span>2 unidades</span>
-          </div>
-
-          <div className="stock-item">
-            <img
-              src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200"
-              alt=""
-            />
-
-            <div>
-              <p>Leche Pil Deslactosada 800 ml</p>
-            </div>
-
-            <span>1 unidad</span>
-          </div>
-
-          <div className="stock-item">
-            <img
-              src="https://images.unsplash.com/photo-1589985270958-3496d5f38a5d?w=200"
-              alt=""
-            />
-
-            <div>
-              <p>Galleta Chips Ahoy 222 gr</p>
-            </div>
-
-            <span>3 unidades</span>
-          </div>
-
+          {stockBajo.length === 0 ? (
+            <p style={{ color: "green", padding: "1rem" }}>✅ Todos los productos tienen stock suficiente</p>
+          ) : (
+            stockBajo.map((p) => (
+              <div className="stock-item" key={p.id}>
+                {p.imageUrl && <img src={p.imageUrl} alt={p.nombre} />}
+                <div>
+                  <p>{p.nombre}</p>
+                </div>
+                <span style={{ color: "red" }}>{p.stock} unidades</span>
+              </div>
+            ))
+          )}
         </div>
-
       </div>
 
-      {/* TABLA */}
+      {/* PEDIDOS RECIENTES */}
       <div className="recent-orders">
-
         <h3>Pedidos recientes</h3>
-
         <table>
-
           <thead>
             <tr>
               <th>Pedido</th>
@@ -163,54 +209,28 @@ export function DashboardView() {
               <th>Estado</th>
             </tr>
           </thead>
-
           <tbody>
-
-            <tr>
-              <td>#021</td>
-              <td>Maria López</td>
-              <td>10:45 a.m</td>
-              <td>Bs/ 45.00</td>
-
-              <td>
-                <span className="estado preparando">
-                  En preparación
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>#020</td>
-              <td>Juan Pérez</td>
-              <td>10:15 a.m</td>
-              <td>Bs/ 32.50</td>
-
-              <td>
-                <span className="estado camino">
-                  En camino
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>#019</td>
-              <td>Ana Torres</td>
-              <td>09:50 a.m</td>
-              <td>Bs/ 28.00</td>
-
-              <td>
-                <span className="estado entregado">
-                  Entregado
-                </span>
-              </td>
-            </tr>
-
+            {pedidosRecientes.map((p) => (
+              <tr key={p.id}>
+                <td>#{p.id}</td>
+                <td>{p.clienteNombre}</td>
+                <td>
+                  {new Date(p.fechaHora).toLocaleTimeString("es-BO", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </td>
+                <td>Bs/ {Number(p.total).toFixed(2)}</td>
+                <td>
+                  <span className={getEstadoClase(p.estado)}>
+                    {getEstadoLabel(p.estado)}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

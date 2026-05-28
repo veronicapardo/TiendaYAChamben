@@ -1,0 +1,736 @@
+.venta-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1.05fr 0.9fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.venta-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.venta-panel h2 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  color: #020617;
+}
+
+.venta-search {
+  height: 48px;
+  border: 1px solid #d9dee8;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+}
+
+.venta-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.venta-categorias {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.venta-categorias button {
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.venta-categorias button.active {
+  background: #ff8300;
+  color: white;
+  border-color: #ff8300;
+}
+
+.productos-grid-venta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.producto-venta-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 12px;
+  background: white;
+  min-height: 245px;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-venta-img {
+  height: 115px;
+  background: #f8fafc;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.producto-venta-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.producto-venta-card h3 {
+  margin: 10px 0 4px;
+  font-size: 15px;
+  line-height: 1.15;
+  min-height: 34px;
+}
+
+.producto-venta-card strong {
+  font-size: 17px;
+  color: #020617;
+  margin-bottom: 8px;
+}
+
+.producto-venta-footer {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.producto-venta-footer span {
+  width: fit-content;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 5px 9px;
+}
+
+.stock-ok {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.stock-low {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.producto-venta-footer button {
+  width: 100%;
+  border: none;
+  background: #ff8300;
+  color: white;
+  font-weight: 800;
+  border-radius: 9px;
+  padding: 9px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.producto-venta-footer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.panel-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-vaciar {
+  border: none;
+  background: transparent;
+  color: #b91c1c;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.carrito-header,
+.carrito-item {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr 0.7fr 0.8fr 32px;
+  align-items: center;
+  gap: 10px;
+}
+
+.carrito-header {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.carrito-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.carrito-producto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carrito-img {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carrito-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carrito-producto p {
+  margin: 4px 0 0;
+  color: #475569;
+}
+
+.cantidad-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cantidad-control button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+.cantidad-control span {
+  width: 28px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.btn-eliminar {
+  border: none;
+  background: transparent;
+  color: #dc2626;
+  cursor: pointer;
+}
+
+.pago-panel h3 {
+  margin: 16px 0 10px;
+  font-size: 15px;
+}
+
+.pago-total-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.pago-total-box div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pago-total-box input {
+  width: 110px;
+  height: 34px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-align: right;
+  padding: 0 10px;
+}
+
+.pago-total-box hr {
+  border: none;
+  border-top: 1px dashed #cbd5e1;
+  margin: 12px 0;
+}
+
+.total-final strong {
+  color: #b91c1c;
+  font-size: 28px;
+}
+
+.metodos-pago {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.metodos-pago button {
+  min-height: 76px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  line-height: 1.15;
+  font-size: 14px;
+}
+
+.metodos-pago button.active {
+  border-color: #ff8300;
+  color: #ff8300;
+  background: #fff7ed;
+}
+
+.venta-label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 700;
+}
+
+.input-bs {
+  display: flex;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 42px;
+}
+
+.input-bs span {
+  width: 56px;
+  display: grid;
+  place-items: center;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.input-bs input {
+  flex: 1;
+  border: none;
+  outline: none;
+  text-align: right;
+  padding: 0 12px;
+}
+
+.cambio-box {
+  height: 44px;
+  border-radius: 10px;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 14px;
+  font-weight: 900;
+}
+
+.comprobante-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.comprobante-box label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.factura-form {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.factura-form p {
+  margin: 0;
+  font-weight: 800;
+}
+
+.factura-form label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.factura-form input {
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 10px;
+}
+
+.btn-confirmar,
+.btn-cancelar {
+  width: 100%;
+  height: 52px;
+  margin-top: 12px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-confirmar {
+  border: none;
+  background: #ff8300;
+  color: white;
+}
+
+.btn-cancelar {
+  border: 1px solid #ef4444;
+  background: white;
+  color: #dc2626;
+}
+
+.venta-bottom {
+  margin-top: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 18px;
+}
+
+.venta-bottom div {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.venta-bottom input {
+  grid-column: 2;
+  height: 42px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0 12px;
+}
+
+.venta-info {
+  color: #64748b;
+  padding: 10px 0;
+}
+
+.venta-error {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+@media (max-width: 1300px) {
+  .venta-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .productos-grid-venta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pago-digital-box {
+  margin-top: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.pago-digital-box h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.pago-digital-box p {
+  margin: 0 0 10px;
+  color: #475569;
+}
+
+.qr-placeholder {
+  width: 110px;
+  height: 110px;
+  margin: 8px auto 12px;
+  border: 2px dashed #ff8300;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #ff8300;
+  background: white;
+}
+
+.pago-digital-box input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+.pago-mixto-box {
+  margin-top: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff7ed;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.pago-mixto-box h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.pago-mixto-box p {
+  margin: 0 0 10px;
+  color: #475569;
+}
+
+.mixto-ok,
+.mixto-pendiente {
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.mixto-ok {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.mixto-pendiente {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.factura-modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.factura-modal {
+  width: min(720px, 100%);
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+  padding: 24px;
+}
+
+.factura-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.factura-modal-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #020617;
+}
+
+.factura-modal-header p {
+  margin: 4px 0 0;
+  color: #64748b;
+}
+
+.factura-modal-header button {
+  border: none;
+  background: #f8fafc;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: #334155;
+}
+
+.factura-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 22px;
+  background: #fffaf2;
+}
+
+.factura-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+
+.factura-logo-small {
+  color: #ef4444;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.factura-logo-main {
+  color: #f97316;
+  font-size: 34px;
+  font-weight: 950;
+}
+
+.factura-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.factura-info-grid div {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.factura-info-grid span,
+.factura-cliente span,
+.factura-total span {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.factura-info-grid strong {
+  color: #020617;
+  font-size: 15px;
+}
+
+.factura-cliente {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.factura-cliente h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.factura-cliente p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.factura-total {
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.factura-total strong {
+  font-size: 30px;
+  color: #b91c1c;
+}
+
+.factura-nota {
+  margin: 16px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.factura-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn-factura-secundario,
+.btn-factura-principal {
+  height: 44px;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-factura-secundario {
+  background: white;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-factura-principal {
+  background: #ff8300;
+  color: white;
+  border: none;
+}
+
+.mensaje-venta {
+  margin-top: 12px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.mensaje-venta.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.mensaje-venta.exito {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}

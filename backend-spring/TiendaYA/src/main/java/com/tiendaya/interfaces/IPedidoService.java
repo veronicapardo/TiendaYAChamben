@@ -4,6 +4,7 @@ import com.tiendaya.dtos.CreatePedidoDto;
 import com.tiendaya.dtos.UpdatePedidoDto;
 import com.tiendaya.models.Pedido;
 import com.tiendaya.models.enums.EstadoPedido;
+import com.tiendaya.dtos.CreatePedidoRapidoDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,6 @@ public interface IPedidoService {
     Optional<Pedido> updatePedido(Integer id, UpdatePedidoDto dto);
 
     Optional<Pedido> deletePedido(Integer id);
+
+    Pedido createPedidoRapido(CreatePedidoRapidoDto dto);
 }

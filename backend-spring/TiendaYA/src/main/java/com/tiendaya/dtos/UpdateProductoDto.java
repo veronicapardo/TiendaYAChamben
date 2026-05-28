@@ -8,6 +8,8 @@ public record UpdateProductoDto(
         BigDecimal precio,
         Integer stock,
         String fechaVencimiento,
+        String imageUrl,
         Boolean activo
+
 ) {
 }

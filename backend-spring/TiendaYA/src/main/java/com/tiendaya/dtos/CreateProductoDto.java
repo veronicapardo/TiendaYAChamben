@@ -22,6 +22,8 @@ public record CreateProductoDto(
         @PositiveOrZero(message = "El stock no puede ser negativo")
         Integer stock,
 
-        String fechaVencimiento
+        String fechaVencimiento,
+
+        String imageUrl
 ) {
 }

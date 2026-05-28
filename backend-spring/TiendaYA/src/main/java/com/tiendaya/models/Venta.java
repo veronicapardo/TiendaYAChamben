@@ -29,6 +29,15 @@ public class Venta {
     @Column(name = "monto_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal montoTotal;
 
+    @Column(name = "monto_efectivo", nullable = false, precision = 10, scale = 2)
+    private BigDecimal montoEfectivo = BigDecimal.ZERO;
+
+    @Column(name = "monto_digital", nullable = false, precision = 10, scale = 2)
+    private BigDecimal montoDigital = BigDecimal.ZERO;
+
+    @Column(name = "cambio", nullable = false, precision = 10, scale = 2)
+    private BigDecimal cambio = BigDecimal.ZERO;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pago", nullable = false)
     private MetodoPago metodoPago;
@@ -66,6 +75,18 @@ public class Venta {
 
         if (this.activo == null) {
             this.activo = true;
+        }
+
+        if (this.montoEfectivo == null) {
+            this.montoEfectivo = BigDecimal.ZERO;
+        }
+
+        if (this.montoDigital == null) {
+            this.montoDigital = BigDecimal.ZERO;
+        }
+
+        if (this.cambio == null) {
+            this.cambio = BigDecimal.ZERO;
         }
     }
 
@@ -138,6 +159,7 @@ public class Venta {
         this.montoTotal = montoTotal;
     }
 
+
     public void setMetodoPago(MetodoPago metodoPago) {
         this.metodoPago = metodoPago;
     }
@@ -152,5 +174,29 @@ public class Venta {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public BigDecimal getMontoEfectivo() {
+        return montoEfectivo;
+    }
+
+    public void setMontoEfectivo(BigDecimal montoEfectivo) {
+        this.montoEfectivo = montoEfectivo;
+    }
+
+    public BigDecimal getMontoDigital() {
+        return montoDigital;
+    }
+
+    public void setMontoDigital(BigDecimal montoDigital) {
+        this.montoDigital = montoDigital;
+    }
+
+    public BigDecimal getCambio() {
+        return cambio;
+    }
+
+    public void setCambio(BigDecimal cambio) {
+        this.cambio = cambio;
     }
 }

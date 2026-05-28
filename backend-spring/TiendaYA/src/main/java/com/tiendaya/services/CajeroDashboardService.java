@@ -64,18 +64,19 @@ public class CajeroDashboardService implements ICajeroDashboardService {
         BigDecimal totalEfectivo = ventas.stream()
                 .filter(venta -> Boolean.TRUE.equals(venta.getActivo()))
                 .filter(venta -> venta.getEstadoVenta() == EstadoVenta.COMPLETADA)
-                .filter(venta -> venta.getMetodoPago() == MetodoPago.EFECTIVO)
                 .filter(venta -> estaEnElDia(venta.getFechaVenta(), inicioDia, finDia))
-                .map(Venta::getMontoTotal)
+                .map(venta -> venta.getMontoEfectivo() != null
+                        ? venta.getMontoEfectivo()
+                        : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal totalQrTransferencia = ventas.stream()
                 .filter(venta -> Boolean.TRUE.equals(venta.getActivo()))
                 .filter(venta -> venta.getEstadoVenta() == EstadoVenta.COMPLETADA)
-                .filter(venta -> venta.getMetodoPago() == MetodoPago.QR
-                        || venta.getMetodoPago() == MetodoPago.TRANSFERENCIA)
                 .filter(venta -> estaEnElDia(venta.getFechaVenta(), inicioDia, finDia))
-                .map(Venta::getMontoTotal)
+                .map(venta -> venta.getMontoDigital() != null
+                        ? venta.getMontoDigital()
+                        : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         DashboardResumenDto resumen = new DashboardResumenDto(
@@ -164,13 +165,15 @@ public class CajeroDashboardService implements ICajeroDashboardService {
             alertas.add(new DashboardAlertaDto(
                     "SIN_STOCK",
                     producto.getNombre(),
-                    "Producto agotado"
+                    "Producto agotado",
+                    producto.getImageUrl()
             ));
         } else if (producto.getStock() <= 3) {
             alertas.add(new DashboardAlertaDto(
                     "STOCK_BAJO",
                     producto.getNombre(),
-                    "Quedan " + producto.getStock() + " unidades"
+                    "Quedan " + producto.getStock() + " unidades",
+                    producto.getImageUrl()
             ));
         }
 
@@ -181,7 +184,8 @@ public class CajeroDashboardService implements ICajeroDashboardService {
             alertas.add(new DashboardAlertaDto(
                     "POR_VENCER",
                     producto.getNombre(),
-                    "Vence el " + producto.getFechaVencimiento()
+                    "Vence el " + producto.getFechaVencimiento(),
+                    producto.getImageUrl()
             ));
         }
 

@@ -1,4 +1,5 @@
 import type { RolUsuario } from "../App";
+import logoTiendaYa from "../assets/decor/logoTiendaYA.png";
 
 type Props = {
   onSeleccionarRol: (rol: RolUsuario) => void;
@@ -7,7 +8,11 @@ type Props = {
 export function RoleSelectionPage({ onSeleccionarRol }: Props) {
   return (
     <main className="role-page">
-      <section className="role-background">
+      <section className="role-frame">
+        <img src={logoTiendaYa} alt="Tienda Ya" className="role-logo-overlay" />
+
+        <h2 className="role-title-overlay">Seleccione un rol</h2>
+
         <button
           className="role-hotspot hotspot-cliente"
           onClick={() => onSeleccionarRol("CLIENTE")}

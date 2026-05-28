@@ -470,3 +470,15 @@
   padding: 12px 0;
  }
 }
+
+.alerta-icon.con-imagen {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.alerta-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}

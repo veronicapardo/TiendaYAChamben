@@ -151,3 +151,66 @@
   cursor: pointer;
   font-size: 14px;
 }
+.topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-box {
+  background: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-icon.black {
+  color: black;
+}
+
+.card-icon.green {
+  color: #15803d;
+}
+
+.card-icon.orange {
+  color: #d97706;
+}
+
+.card-icon.red {
+  color: #b91c1c;
+}
+
+.search-box {
+  flex: 1;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: none;
+  background: white;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

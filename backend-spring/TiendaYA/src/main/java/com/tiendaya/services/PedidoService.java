@@ -13,6 +13,17 @@ import com.tiendaya.repositories.RepartidorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import com.tiendaya.dtos.CreatePedidoRapidoDto;
+import com.tiendaya.dtos.PedidoProductoDto;
+import com.tiendaya.models.Cliente;
+import com.tiendaya.models.Pedido;
+import com.tiendaya.models.PedidoDetalle;
+import com.tiendaya.models.Producto;
+import com.tiendaya.models.Repartidor;
+import com.tiendaya.models.enums.EstadoPedido;
+import java.math.BigDecimal;
+
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -112,6 +123,92 @@ public class PedidoService implements IPedidoService {
         pedido.setTotal(total);
 
         return pedidoRepository.save(pedido);
+    }
+
+    @Override
+    @Transactional
+    public Pedido createPedidoRapido(CreatePedidoRapidoDto dto) {
+        Cliente cliente = obtenerOcrearClientePorTelefono(dto);
+
+        Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+        pedido.setDireccionEntrega(dto.direccionEntrega());
+        pedido.setEstado(EstadoPedido.PENDIENTE);
+
+        if (dto.repartidorId() != null) {
+            Repartidor repartidor = repartidorRepository.findById(dto.repartidorId())
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "El repartidor con id " + dto.repartidorId() + " no existe"
+                    ));
+
+            pedido.setRepartidor(repartidor);
+        }
+
+        BigDecimal totalProductos = BigDecimal.ZERO;
+
+        for (PedidoProductoDto item : dto.productos()) {
+            Producto producto = productoRepository.findById(item.productoId())
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "El producto con id " + item.productoId() + " no existe"
+                    ));
+
+            if (!Boolean.TRUE.equals(producto.getActivo())) {
+                throw new IllegalArgumentException("El producto " + producto.getNombre() + " está desactivado");
+            }
+
+            if (item.cantidad() <= 0) {
+                throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
+            }
+
+            if (producto.getStock() < item.cantidad()) {
+                throw new IllegalArgumentException("Stock insuficiente para " + producto.getNombre());
+            }
+
+            BigDecimal subtotal = producto.getPrecio().multiply(BigDecimal.valueOf(item.cantidad()));
+
+            PedidoDetalle detalle = new PedidoDetalle();
+            detalle.setProducto(producto);
+            detalle.setCantidad(item.cantidad());
+            detalle.setPrecioUnitario(producto.getPrecio());
+            detalle.setSubtotal(subtotal);
+
+            pedido.agregarDetalle(detalle);
+
+            producto.setStock(producto.getStock() - item.cantidad());
+            productoRepository.save(producto);
+
+            totalProductos = totalProductos.add(subtotal);
+        }
+
+        BigDecimal costoEnvio = dto.costoEnvio() != null ? dto.costoEnvio() : BigDecimal.ZERO;
+
+        if (costoEnvio.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("El costo de envío no puede ser negativo");
+        }
+
+        BigDecimal totalFinal = totalProductos.add(costoEnvio);
+        pedido.setTotal(totalFinal);
+
+        return pedidoRepository.save(pedido);
+    }
+
+    private Cliente obtenerOcrearClientePorTelefono(CreatePedidoRapidoDto dto) {
+        return clienteRepository.findByTelefono(dto.clienteTelefono())
+                .map(clienteExistente -> {
+                    clienteExistente.setNombre(dto.clienteNombre());
+                    clienteExistente.setDireccion(dto.direccionEntrega());
+                    clienteExistente.setActivo(true);
+                    return clienteRepository.save(clienteExistente);
+                })
+                .orElseGet(() -> {
+                    Cliente cliente = new Cliente();
+                    cliente.setNombre(dto.clienteNombre());
+                    cliente.setTelefono(dto.clienteTelefono());
+                    cliente.setDireccion(dto.direccionEntrega());
+                    cliente.setActivo(true);
+
+                    return clienteRepository.save(cliente);
+                });
     }
 
     @Override

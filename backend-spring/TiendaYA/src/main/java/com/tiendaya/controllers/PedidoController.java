@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.tiendaya.dtos.CreatePedidoRapidoDto;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +71,21 @@ public class PedidoController {
     public ResponseEntity<?> createPedido(@Valid @RequestBody CreatePedidoDto dto) {
         try {
             Pedido pedido = pedidoService.createPedido(dto);
+
+            return ResponseEntity
+                    .status(201)
+                    .body(convertirAResponseDto(pedido));
+        } catch (IllegalArgumentException error) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageDto(error.getMessage()));
+        }
+    }
+
+    @PostMapping("/rapido")
+    public ResponseEntity<?> createPedidoRapido(@Valid @RequestBody CreatePedidoRapidoDto dto) {
+        try {
+            Pedido pedido = pedidoService.createPedidoRapido(dto);
 
             return ResponseEntity
                     .status(201)

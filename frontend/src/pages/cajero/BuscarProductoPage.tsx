@@ -10,7 +10,6 @@ import {
   Users,
   WalletCards,
   BarChart3,
-  Settings,
   Package,
   ChevronRight,
   LogOut,
@@ -26,6 +25,7 @@ import { obtenerProductos, type ProductoApi } from "../../services/api";
 type Props = {
   usuario: UsuarioLogueado;
   onNavigate: (vista: VistaCajero) => void;
+  onLogout: () => void;
 };
 
 function formatearBolivianos(valor: number) {
@@ -41,7 +41,7 @@ function obtenerStockInfo(stock: number): { clase: string; etiqueta: string } {
   return { clase: "stock-ok", etiqueta: `${stock} en stock` };
 }
 
-export function BuscarProductoPage({ usuario, onNavigate }: Props) {
+export function BuscarProductoPage({ usuario, onNavigate, onLogout }: Props) {
   const [productos, setProductos] = useState<ProductoApi[]>([]);
   const [busqueda, setBusqueda] = useState("");
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
@@ -179,21 +179,26 @@ export function BuscarProductoPage({ usuario, onNavigate }: Props) {
             <span>Reportes</span>
           </button>
 
-          <button className="menu-item" onClick={() => onNavigate("configuracion")}>
-            <Settings size={22} />
-            <span>Configuración</span>
-          </button>
+          
         </nav>
 
         <div className="sidebar-user">
-          <div className="sidebar-user-icon">
-            <Users size={22} />
-          </div>
-          <div>
-            <strong>{usuario.nombre}</strong>
-            <p>Turno: Mañana</p>
-          </div>
-          <LogOut size={18} />
+          <div className="sidebar-user-icon"><Users size={22} /></div>
+          <div><strong>{usuario.nombre}</strong><p>Turno: Mañana</p></div>
+          <button
+  type="button"
+  onClick={onLogout}
+  style={{
+    border: "none",
+    background: "transparent",
+    color: "#b91c1c",
+    cursor: "pointer",
+    display: "grid",
+    placeItems: "center",
+  }}
+>
+  <LogOut size={18} />
+</button>
         </div>
       </aside>
 

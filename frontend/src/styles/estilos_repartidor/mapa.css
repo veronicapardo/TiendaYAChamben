@@ -1,0 +1,25 @@
+.mapa-container {
+  display: grid;
+  grid-template-columns: 2fr 350px;
+  gap: 24px;
+}
+
+.mapa-placeholder {
+  height: 650px;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  padding: 30px;
+}
+
+.ruta-sidebar {
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  padding: 22px;
+}
+
+.ruta-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}

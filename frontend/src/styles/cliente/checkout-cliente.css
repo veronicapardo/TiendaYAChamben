@@ -227,3 +227,24 @@
   box-shadow: none;
   cursor: not-allowed;
 }
+
+.checkout-mensaje {
+  width: min(920px, calc(100% - 32px));
+  margin: 14px auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.checkout-mensaje.exito {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.checkout-mensaje.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}

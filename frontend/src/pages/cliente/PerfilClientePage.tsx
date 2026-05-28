@@ -6,8 +6,6 @@ import { Logo } from "../../components/logo";
 import { PaginaActualC } from "../../components/cliente/PaginaActualC";
 import {
   MapPin,
-  CreditCard,
-  Bell,
   Pencil,
   LogOut,
   BadgeCheck,
@@ -20,32 +18,66 @@ type Props = {
 };
 
 export function PerfilClientePage({ onNavigate }: Props) {
-  const [nombre, setNombre] =useState("Juan");
-  const [apellido, setApellido] =useState("Pérez");
-  const [email, setEmail] =useState("juan@gmail.com");
-  const [telefono, setTelefono] =useState("76543210");
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [direccion, setDireccion] = useState("");
 
   // 🚀 NUEVO: Control de modo edición en interfaz
   const [editando, setEditando] = useState(false);
 
   useEffect(() => {
-    /* CONEXIÓN BACKEND (Instrucciones para el desarrollador Backend):
-       - MÉTODO HTTP: GET
-       - ENDPOINT RECOMENDADO: /api/cliente/perfil
-       - DESCRIPCIÓN: Carga los datos del cliente que se encuentra autenticado en su sesión actual.
-       - MAPEO: setNombre(res.nombre), setApellido(res.apellido), setEmail(res.email), setTelefono(res.telefono)
-    */
+  async function cargarPerfil() {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/clientes/perfil/1"
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al cargar perfil");
+      }
+
+      const data = await response.json();
+
+      setNombre(data.nombre);
+      setTelefono(data.telefono);
+      setDireccion(data.direccion ?? "");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  cargarPerfil();
   }, []);
 
-  function guardarCambios() {
-    /* 🔌 CONEXIÓN BACKEND (Instrucciones para el desarrollador Backend):
-       - MÉTODO HTTP: PUT o PATCH
-       - ENDPOINT RECOMENDADO: /api/cliente/perfil/actualizar
-       - BODY: { nombre, apellido, email, telefono }
-    */
+  async function guardarCambios() {
+  try {
+    const response = await fetch(
+      "http://localhost:3000/api/clientes/perfil/1",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre,
+          telefono,
+          direccion,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error();
+    }
+
     setEditando(false);
-    alert("Información actualizada correctamente");
+
+    alert("Información actualizada");
+  } catch (error) {
+    console.error(error);
+    alert("Error al actualizar");
   }
+}
 
   function manejarCerrarSesion() {
     /* 🔌 CONEXIÓN BACKEND:
@@ -75,7 +107,7 @@ export function PerfilClientePage({ onNavigate }: Props) {
         </div>
 
         <h1 className="perfil-nombre-usuario">
-          {nombre} {apellido}
+          {nombre}
         </h1>
       </section>
 
@@ -86,15 +118,36 @@ export function PerfilClientePage({ onNavigate }: Props) {
           
           {editando ? (
             <div className="inputs-edicion-perfil" style={{ display: "flex", flexDirection: "column", gap: "5px", marginTop: "8px" }}>
-              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Nombre" />
-              <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} placeholder="Apellido" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-              <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Teléfono" />
+              <input
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                placeholder="Nombre"
+              />
+
+              <input
+                type="text"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                placeholder="Teléfono"
+              />
+
+              <input
+                type="text"
+                value={direccion}
+                onChange={(e) => setDireccion(e.target.value)}
+                placeholder="Dirección"
+              />
             </div>
           ) : (
             <>
-              <span className="tarjeta-subtexto">{email}</span>
-              <span className="tarjeta-subtexto">+591 {telefono}</span>
+              <span className="tarjeta-subtexto">
+                +591 {telefono}
+              </span>
+
+              <span className="tarjeta-subtexto">
+                {direccion}
+              </span>
             </>
           )}
         </div>
@@ -110,7 +163,6 @@ export function PerfilClientePage({ onNavigate }: Props) {
         )}
       </section>
 
-      {/* OPCIONES */}
       <section className="perfil-menu-opciones">
         {/* DIRECCIONES */}
         <div className="opcion-item">
@@ -121,29 +173,7 @@ export function PerfilClientePage({ onNavigate }: Props) {
           <button className="btn-editar-lapiz" onClick={() => onNavigate("direcciones-cliente")}>
             <Pencil size={18} />
           </button>
-        </div>
-
-        {/* MÉTODOS PAGO */}
-        <div className="opcion-item">
-          <div className="opcion-izquierda">
-            <CreditCard size={20} />
-            <span className="opcion-texto">Métodos de pago</span>
-          </div>
-          <button className="btn-editar-lapiz" onClick={() => onNavigate("metodos-pago-cliente")}>
-            <Pencil size={18} />
-          </button>
-        </div>
-
-        {/* NOTIFICACIONES */}
-        <div className="opcion-item">
-          <div className="opcion-izquierda">
-            <Bell size={20} />
-            <span className="opcion-texto">Historial de notificaciones</span>
-          </div>
-        </div>
-      </section>
-
-      {/* LOGOUT */}
+        </div>      </section>      {/* LOGOUT */}
       <footer className="perfil-footer-acciones">
         <button className="btn-logout" onClick={manejarCerrarSesion}>
           <LogOut size={18} />

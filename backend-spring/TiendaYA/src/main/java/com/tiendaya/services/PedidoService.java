@@ -68,6 +68,30 @@ public class PedidoService implements IPedidoService {
         return pedidoRepository.findByEstadoOrderByIdAsc(estado);
     }
 
+
+    public List<Pedido> getPedidosPorRepartidor(Integer repartidorId) {
+        return pedidoRepository.findAll()
+                .stream()
+                .filter(pedido -> pedido.getEstado() != EstadoPedido.CANCELADO)
+                .filter(pedido ->
+                        pedido.getRepartidor() == null ||
+                                pedido.getRepartidor().getId().equals(repartidorId)
+                )
+                .toList();
+    }
+
+    public List<Pedido> getHistorialPorRepartidor(Integer repartidorId) {
+        return pedidoRepository.findAll()
+                .stream()
+                .filter(pedido -> pedido.getRepartidor() != null)
+                .filter(pedido -> pedido.getRepartidor().getId().equals(repartidorId))
+                .filter(pedido ->
+                        pedido.getEstado() == EstadoPedido.ENTREGADO ||
+                                pedido.getEstado() == EstadoPedido.CANCELADO ||
+                                pedido.getEstado() == EstadoPedido.ENTREGA_FALLIDA
+                )
+                .toList();
+    }
     @Override
     @Transactional
     public Pedido createPedido(CreatePedidoDto dto) {

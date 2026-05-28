@@ -10,6 +10,7 @@ public record PedidoResponseDto(
         Integer id,
         Integer clienteId,
         String clienteNombre,
+        String clienteTelefono,
         Integer repartidorId,
         String repartidorNombre,
         LocalDateTime fechaHora,

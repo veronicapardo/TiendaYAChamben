@@ -14,7 +14,6 @@ import {
   Users,
   WalletCards,
   BarChart3,
-  Settings,
   LogOut,
   CalendarDays,
   Clock,
@@ -40,6 +39,7 @@ import {
 type Props = {
   usuario: UsuarioLogueado;
   onNavigate: (vista: VistaCajero) => void;
+  onLogout: () => void;
 };
 
 type FiltroEstado = "TODOS" | "PENDIENTE" | "EN_PROCESO" | "ENTREGADO" | "CANCELADO";
@@ -94,7 +94,7 @@ function obtenerTipoEntrega(pedido: PedidoApi) {
   return "Delivery";
 }
 
-export function PedidosPendientesPage({ usuario, onNavigate }: Props) {
+export function PedidosPendientesPage({ usuario, onNavigate, onLogout }: Props) {
   const [pedidos, setPedidos] = useState<PedidoApi[]>([]);
   const [busqueda, setBusqueda] = useState("");
   const [filtroEstado, setFiltroEstado] = useState<FiltroEstado>("TODOS");
@@ -333,10 +333,7 @@ await cargarPedidos();
             <span>Reportes</span>
           </button>
 
-          <button className="menu-item" onClick={() => onNavigate("configuracion")}>
-            <Settings size={22} />
-            <span>Configuración</span>
-          </button>
+          
         </nav>
 
         <div className="sidebar-user">
@@ -347,7 +344,20 @@ await cargarPedidos();
             <strong>{usuario.nombre}</strong>
             <p>Turno: Mañana</p>
           </div>
-          <LogOut size={18} />
+        <button
+  type="button"
+  onClick={onLogout}
+  style={{
+    border: "none",
+    background: "transparent",
+    color: "#b91c1c",
+    cursor: "pointer",
+    display: "grid",
+    placeItems: "center",
+  }}
+>
+  <LogOut size={18} />
+</button>
         </div>
       </aside>
 

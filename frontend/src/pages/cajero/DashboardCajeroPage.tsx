@@ -11,7 +11,6 @@ import {
   Users,
   WalletCards,
   BarChart3,
-  Settings,
   CalendarDays,
   Clock,
   Wifi,
@@ -35,6 +34,7 @@ import {
 type Props = {
   usuario: UsuarioLogueado;
   onNavigate: (vista: VistaCajero) => void;
+  onLogout: () => void;
 };
 ``
 function formatearBolivianos(valor: number) {
@@ -120,8 +120,7 @@ function formatearTipoAlerta(tipo: string) {
 
   return tipos[tipo] || tipo;
 }
-
-export function DashboardCajeroPage({ usuario, onNavigate }: Props) {
+export function DashboardCajeroPage({ usuario, onNavigate, onLogout }: Props) {
   const [dashboard, setDashboard] = useState<CajeroDashboardResponse | null>(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
@@ -208,25 +207,20 @@ export function DashboardCajeroPage({ usuario, onNavigate }: Props) {
   <span>Pedidos Pendientes</span>
 </button>
 
-          <button className="menu-item">
-            <Users size={22} />
-            <span>Clientes</span>
-          </button>
+        <button className="menu-item" onClick={() => onNavigate("clientes")}>
+  <Users size={22} />
+  <span>Clientes</span>
+</button>
 
-          <button className="menu-item">
-            <WalletCards size={22} />
-            <span>Cierre de Caja</span>
-          </button>
+<button className="menu-item" onClick={() => onNavigate("cierre-caja")}>
+  <WalletCards size={22} />
+  <span>Cierre de Caja</span>
+</button>
 
-          <button className="menu-item">
-            <BarChart3 size={22} />
-            <span>Reportes</span>
-          </button>
-
-          <button className="menu-item">
-            <Settings size={22} />
-            <span>Configuración</span>
-          </button>
+<button className="menu-item" onClick={() => onNavigate("reportes")}>
+  <BarChart3 size={22} />
+  <span>Reportes</span>
+</button>
         </nav>
 
         <div className="sidebar-user">
@@ -237,7 +231,20 @@ export function DashboardCajeroPage({ usuario, onNavigate }: Props) {
             <strong>{usuario.nombre}</strong>
             <p>Turno: Mañana</p>
           </div>
-          <LogOut size={18} />
+          <button
+  type="button"
+  onClick={onLogout}
+  style={{
+    border: "none",
+    background: "transparent",
+    color: "#b91c1c",
+    cursor: "pointer",
+    display: "grid",
+    placeItems: "center",
+  }}
+>
+  <LogOut size={18} />
+</button>
         </div>
       </aside>
 

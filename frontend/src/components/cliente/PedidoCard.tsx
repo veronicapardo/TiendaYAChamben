@@ -153,14 +153,16 @@ export function PedidoCard({
 
           {estado !== "ENTREGADO" && estado !== "CANCELADO" && estado !== "ENTREGA_FALLIDA" && (
             <button
-              className="btn-cancelar"
-              onClick={() => {
-                if (onCancelar) onCancelar(id);
-                alert(`Solicitud enviada para cancelar el pedido #${id}`);
-              }}
-            >
-              Cancelar Pedido
-            </button>
+  type="button"
+  className="btn-cancelar"
+  onClick={() => {
+    if (onCancelar) {
+      onCancelar(id);
+    }
+  }}
+>
+  Cancelar pedido
+</button>
           )}
         </div>
       )}

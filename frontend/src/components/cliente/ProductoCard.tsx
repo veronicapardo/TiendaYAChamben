@@ -14,11 +14,10 @@ type Props = {
 };
 
 export function ProductoCard({
-  id,
   nombre,
   precio,
   imagen,
-  disponible = true, // asumimos que sí hay stock
+  disponible = true,
   cantidad = 0,
   mostrarDisponibilidad = false,
   variante = "vertical", 

@@ -7,4 +7,3 @@ export type VistaCajero =
   | "clientes"
   | "cierre-caja"
   | "reportes"
-  | "configuracion";

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class PedidoService implements IPedidoService {
 
@@ -52,10 +53,13 @@ public class PedidoService implements IPedidoService {
         return pedidoRepository.findByClienteIdOrderByIdAsc(clienteId);
     }
 
-    @Override
-    public List<Pedido> getPedidosPorEstado(EstadoPedido estado) {
-        return pedidoRepository.findByEstadoOrderByIdAsc(estado);
+   @Override
+public List<Pedido> getPedidosPorEstado(EstadoPedido estado) {
+    if (estado == null) {
+        return List.of();
     }
+    return pedidoRepository.findByEstadoOrderByIdAsc(estado);
+}
 
     @Override
     @Transactional
@@ -183,4 +187,24 @@ public class PedidoService implements IPedidoService {
             productoRepository.save(producto);
         }
     }
+    @Override
+public List<Pedido> getPedidosPorRepartidor(Integer repartidorId) {
+    // Asumiendo que Pedido tiene una relación @ManyToOne con Repartidor
+    // y que la columna en la tabla pedidos se llama repartidor_id
+    return pedidoRepository.findByRepartidorIdAndEstadoNot(repartidorId, EstadoPedido.ENTREGADO);
+}
+
+@Override
+@Transactional
+public Optional<Pedido> actualizarEstado(Integer id, EstadoPedido nuevoEstado) {
+    Optional<Pedido> pedidoOpt = pedidoRepository.findById(id);
+    if (pedidoOpt.isPresent()) {
+        Pedido pedido = pedidoOpt.get();
+        pedido.setEstado(nuevoEstado);
+        pedidoRepository.save(pedido);
+        return Optional.of(pedido);
+    }
+    return Optional.empty();
+}
+
 }

@@ -90,3 +90,72 @@ export async function obtenerDashboardCajero(): Promise<CajeroDashboardResponse>
 
   return contenido;
 }
+
+export type PedidoAsignado = {
+  id: number;
+  cliente: string;
+  direccion: string;
+  estado: EstadoPedido;   // reutilizamos el tipo que ya tienes
+  total: number;
+};
+
+/**
+ * Obtiene los pedidos asignados a un repartidor específico.
+ * @param repartidorId - ID del repartidor logueado.
+ */
+export async function obtenerPedidosAsignados(repartidorId: number): Promise<PedidoAsignado[]> {
+  const respuesta = await fetch(`${API_URL}/v1/repartidor/${repartidorId}/pedidos`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const contenido = await respuesta.json();
+
+  if (!respuesta.ok) {
+    throw new Error(contenido.mensaje || "Error al obtener pedidos asignados");
+  }
+
+  return contenido;
+}
+
+/**
+ * Actualiza el estado de un pedido.
+ * @param pedidoId - ID del pedido.
+ * @param nuevoEstado - Nuevo estado (debe ser uno de los definidos en EstadoPedido).
+ */
+export async function actualizarEstadoPedido(pedidoId: number, nuevoEstado: EstadoPedido): Promise<void> {
+  const respuesta = await fetch(`${API_URL}/v1/pedidos/${pedidoId}/estado`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ estado: nuevoEstado }),
+  });
+
+  const contenido = await respuesta.json();
+
+  if (!respuesta.ok) {
+    throw new Error(contenido.mensaje || "Error al actualizar estado del pedido");
+  }
+
+  return;
+}
+
+export async function obtenerHistorialRepartidor(id: number): Promise<PedidoAsignado[]> {
+  const respuesta = await fetch(`${API_URL}/v1/repartidor/${id}/historial`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const contenido = await respuesta.json();
+
+  if (!respuesta.ok) {
+    throw new Error(contenido.mensaje || "Error al obtener historial del repartidor");
+  }
+
+  return contenido;
+}

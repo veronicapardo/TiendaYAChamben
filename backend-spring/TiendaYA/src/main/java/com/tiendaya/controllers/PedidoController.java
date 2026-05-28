@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map; 
 
 @RestController
 @RequestMapping("/v1/pedidos")
@@ -24,12 +25,12 @@ public class PedidoController {
 
     @GetMapping
     public ResponseEntity<List<PedidoResponseDto>> getPedidos() {
-        List<PedidoResponseDto> pedidos = pedidoService.getPedidos()
-                .stream()
+        // Map domain pedidos to response DTOs
+        List<Pedido> pedidos = pedidoService.getPedidos();
+        List<PedidoResponseDto> pedidosDto = pedidos.stream()
                 .map(this::convertirAResponseDto)
                 .toList();
-
-        return ResponseEntity.ok(pedidos);
+        return ResponseEntity.ok(pedidosDto);
     }
 
     @GetMapping("/{id}")
@@ -47,22 +48,20 @@ public class PedidoController {
 
     @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<List<PedidoResponseDto>> getPedidosPorCliente(@PathVariable Integer clienteId) {
-        List<PedidoResponseDto> pedidos = pedidoService.getPedidosPorCliente(clienteId)
-                .stream()
+        List<Pedido> pedidos = pedidoService.getPedidosPorCliente(clienteId);
+        List<PedidoResponseDto> pedidosDto = pedidos.stream()
                 .map(this::convertirAResponseDto)
                 .toList();
-
-        return ResponseEntity.ok(pedidos);
+        return ResponseEntity.ok(pedidosDto);
     }
 
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<PedidoResponseDto>> getPedidosPorEstado(@PathVariable EstadoPedido estado) {
-        List<PedidoResponseDto> pedidos = pedidoService.getPedidosPorEstado(estado)
+        List<PedidoResponseDto> pedidosDto = pedidoService.getPedidosPorEstado(estado)
                 .stream()
                 .map(this::convertirAResponseDto)
                 .toList();
-
-        return ResponseEntity.ok(pedidos);
+        return ResponseEntity.ok(pedidosDto);
     }
 
     @PostMapping
@@ -144,5 +143,38 @@ public class PedidoController {
                 detalle.getPrecioUnitario(),
                 detalle.getSubtotal()
         );
+    }
+
+    @GetMapping("/repartidor/{repartidorId}/pedidos")
+    public ResponseEntity<List<PedidoResponseDto>> getPedidosPorRepartidor(@PathVariable Integer repartidorId) {
+        List<Pedido> pedidos = pedidoService.getPedidosPorRepartidor(repartidorId);
+        List<PedidoResponseDto> pedidosDto = pedidos.stream()
+                .map(this::convertirAResponseDto)
+                .toList();
+        return ResponseEntity.ok(pedidosDto);
+    }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstadoPedido(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> payload) {
+        
+        String nuevoEstadoStr = payload.get("estado");
+        if (nuevoEstadoStr == null) {
+            return ResponseEntity.badRequest().body(new MessageDto("El campo 'estado' es requerido"));
+        }
+        
+        try {
+            String estadoUpper = nuevoEstadoStr.toUpperCase();
+            EstadoPedido nuevoEstado = EstadoPedido.valueOf(estadoUpper);
+            
+            Optional<Pedido> pedidoActualizado = pedidoService.actualizarEstado(id, nuevoEstado);
+            if (pedidoActualizado.isEmpty()) {
+                return ResponseEntity.status(404).body(new MessageDto("Pedido no encontrado"));
+            }
+            return ResponseEntity.ok(convertirAResponseDto(pedidoActualizado.get()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new MessageDto("Estado inválido: " + nuevoEstadoStr));
+        }
     }
 }

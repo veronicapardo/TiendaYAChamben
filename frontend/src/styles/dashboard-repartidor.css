@@ -1,0 +1,88 @@
+.repartidor-dashboard {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+}
+
+.repartidor-sidebar {
+  width: 250px;
+  background: white;
+  border-radius: 0 30px 30px 0;
+  padding: 34px 20px;
+  border-left: 4px solid #ff9800;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.repartidor-content {
+  flex: 1;
+  padding: 28px;
+}
+
+.pedidos-panel {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  margin-top: 24px;
+}
+
+.pedido-item {
+  display: grid;
+  grid-template-columns: 60px 1.5fr 1fr 180px;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pedido-status {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pedido-status.pendiente {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.pedido-status.en_camino {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.pedido-status.entregado {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.estado-tag {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-success {
+  border: none;
+  background: #16a34a;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 700;
+}

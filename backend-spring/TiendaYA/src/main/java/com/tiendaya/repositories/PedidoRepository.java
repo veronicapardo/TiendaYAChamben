@@ -13,4 +13,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     List<Pedido> findByClienteIdOrderByIdAsc(Integer clienteId);
 
     List<Pedido> findByEstadoOrderByIdAsc(EstadoPedido estado);
+
+    List<Pedido> findByRepartidorIdAndEstadoNot(Integer repartidorId, EstadoPedido entregado);
+    
 }

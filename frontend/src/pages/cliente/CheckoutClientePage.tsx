@@ -5,11 +5,14 @@ import { Logo } from "../../components/logo";
 import { PaginaActualC } from "../../components/cliente/PaginaActualC";
 import { useState } from "react";
 
+import type { ItemCarrito } from "../../types/carrito";
+
 type Props = {
   onNavigate: (pagina: string) => void;
+  carrito: ItemCarrito[];
 };
 
-export function CheckoutClientePage({ onNavigate }: Props) {
+export function CheckoutClientePage({onNavigate,carrito}: Props) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -20,43 +23,65 @@ export function CheckoutClientePage({ onNavigate }: Props) {
   const [tipoEntrega, setTipoEntrega] = useState<"ENVIO" | "RECOJO">("ENVIO");
   const [autocompletar, setAutocompletar] = useState(false);
 
-  const total = 48;
+  const total = carrito.reduce(
+  (acc, item) => acc + item.precio * item.cantidad,
+  0
+  );
   const totalEnvio = tipoEntrega === "ENVIO" ? 10 : 0;
   const totalFinal = total + totalEnvio;
 
-  function finalizarPedido() {
-    // tipoEntrega se calcula desde direccion para cliente.
-    // Si direccion === "TIENDA" => RECOJO
-    // Caso contrario => ENVIO
-    const pedido = {
-      nombre,
-      apellido,
-      direccion: tipoEntrega === "RECOJO" ? "Venta en tienda" : direccion,
-      email,
-      telefono,
-      nit,
-      indicaciones,
-      tipoEntrega,
-      autocompletar,
-      subtotal: total,
-      envio: totalEnvio,
-      totalFinal,
+  const productosPedido = carrito.map((item) => ({
+  productoId: item.id,
+  cantidad: item.cantidad,
+  precioUnitario: item.precio,
+  totalProducto: item.precio * item.cantidad,
+  })); 
+  async function finalizarPedido() {
+  try {
+    const body = {
+      clienteId: 1,
+      direccionEntrega:
+        tipoEntrega === "RECOJO"
+          ? "Venta en tienda"
+          : direccion,
+      productos: productosPedido,
     };
 
-    console.log("Pedido enviado:");
-    console.log(pedido);
+    const response = await fetch(
+      "http://localhost:3000/v1/pedidos",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
-    /*  CONEXIÓN BACKEND (Instrucciones para el desarrollador Backend):
-       - MÉTODO HTTP: POST
-       - ENDPOINT RECOMENDADO: /api/pedidos/cliente
-       - DESCRIPCIÓN: Este endpoint debe recibir el objeto "pedido" detallado aquí arriba.
-       - REGLA DE NEGOCIO: La columna 'direccion' recibirá el string "Venta en tienda" si el usuario eligió RECOJO,
-         sirviendo internamente para clasificar el tipo de entrega en el sistema sin alterar la estructura básica de la BD.
-    */
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(
+        error.mensaje ||
+        "No se pudo registrar el pedido"
+      );
+    }
+
+    const pedidoCreado = await response.json();
+
+    console.log("Pedido creado:", pedidoCreado);
 
     alert("Pedido realizado correctamente");
+
     onNavigate("pedidos");
+  } catch (error: any) {
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Error al crear pedido"
+    );
   }
+}
 
   function cancelarPedido() {
     setNombre("");
@@ -184,21 +209,25 @@ export function CheckoutClientePage({ onNavigate }: Props) {
       </section>
     
       <div className="checkout-botones">
-        <button className="btn-cancelar" onClick={cancelarPedido}>
-          Cancelar Pedido
+        <button
+          type="button"
+          className="btn-cancelar"
+          onClick={cancelarPedido}
+          >Cancelar
         </button>
 
         <button
+          type="button"
           className="btn-finalizar"
           disabled={
-            !nombre ||
-            !apellido ||
-            !telefono ||
-            !email ||
-            (tipoEntrega === "ENVIO" && !direccion)
+              !nombre ||
+              !apellido ||
+              !telefono ||
+              !email ||
+              (tipoEntrega === "ENVIO" && !direccion)
           }
           onClick={finalizarPedido}
-        >
+          >
           Finalizar Pedido
         </button>
       </div>

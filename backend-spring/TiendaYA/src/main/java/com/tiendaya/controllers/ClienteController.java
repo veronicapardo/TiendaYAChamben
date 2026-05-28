@@ -1,6 +1,7 @@
 package com.tiendaya.controllers;
 
 import com.tiendaya.dtos.CreatePedidoDto;
+import com.tiendaya.dtos.UpdateClienteDto;
 import com.tiendaya.dtos.MessageDto;
 import com.tiendaya.models.Cliente;
 import com.tiendaya.models.Producto;
@@ -93,5 +94,21 @@ public class ClienteController {
                     .body(new MessageDto("El cliente con id " + id + " no existe"));
         }
         return ResponseEntity.ok(cliente.get());
+    }
+    @PutMapping("/perfil/{id}")
+    public ResponseEntity<?> updatePerfil(
+            @PathVariable Integer id,
+            @RequestBody UpdateClienteDto dto
+    ) {
+    
+        Optional<Cliente> clienteActualizado =
+                clienteService.updateCliente(id, dto);
+    
+        if (clienteActualizado.isEmpty()) {
+            return ResponseEntity.status(404)
+                    .body(new MessageDto("Cliente no encontrado"));
+        }
+    
+        return ResponseEntity.ok(clienteActualizado.get());
     }
 }

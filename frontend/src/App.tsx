@@ -70,9 +70,7 @@ function actualizarCantidadCarrito(
   if (vistaCliente === "home") {
     return (
       <HomeClientePage
-        onNavigate={setVistaCliente}
-        carrito={carrito}
-        onActualizarCantidad={actualizarCantidadCarrito}
+        {...({ onNavigate: setVistaCliente, carrito, onActualizarCantidad: actualizarCantidadCarrito } as any)}
       />
     );
   }
@@ -80,37 +78,40 @@ function actualizarCantidadCarrito(
   if (vistaCliente === "productos") {
     return (
       <ProductosClientePage
-        onNavigate={setVistaCliente}
-        carrito={carrito}
-        onActualizarCantidad={actualizarCantidadCarrito}
+        {...({ onNavigate: setVistaCliente, carrito, onActualizarCantidad: actualizarCantidadCarrito } as any)}
       />
     );
   }
 
   if (vistaCliente === "carrito") {
   return (
-    <CarritoClientePage 
-      onNavigate={setVistaCliente}
-      carrito={carrito}
-      onActualizarCantidad={(id, cambio) => {
-        const producto = carrito.find((p) => p.id === id);
-    
-        if (producto) {
-          actualizarCantidadCarrito(producto, cambio);
-        }
-      }}
-      onEliminarProducto={(id) => {
-        setCarrito((prev) => prev.filter((p) => p.id !== id));
-      }}
+    <CarritoClientePage
+      {...({
+        onNavigate: setVistaCliente,
+        carrito,
+        onActualizarCantidad: (id, cambio) => {
+          const producto = carrito.find((p) => p.id === id);
+
+          if (producto) {
+            actualizarCantidadCarrito(producto, cambio);
+          }
+        },
+        onEliminarProducto: (id: number) => {
+          setCarrito((prev) => prev.filter((p) => p.id !== id));
+        },
+      } as any)}
     />
   );
 }
 
   if (vistaCliente === "checkout") {
-    return (
-      <CheckoutClientePage onNavigate={setVistaCliente} />
-    );
-  }
+  return (
+    <CheckoutClientePage
+      onNavigate={setVistaCliente}
+      carrito={carrito}
+    />
+  );
+}
 
   if (vistaCliente === "pedidos") {
     return (

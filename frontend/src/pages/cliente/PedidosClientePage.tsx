@@ -17,54 +17,41 @@ export function PedidosClientePage({ onNavigate }: Props) {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [cargando, setCargando] = useState(false);
 
-  useEffect(() => {
-    /* CONEXIÓN BACKEND (Instrucciones para el desarrollador Backend):
-       - MÉTODO HTTP: GET
-       - ENDPOINT RECOMENDADO: /api/pedidos/mis-pedidos
-       - DESCRIPCIÓN: Retorna el historial de compras del cliente actualmente autenticado (usando su Token/Sesión).
-       - REGLA DE NEGOCIO: Cada objeto del arreglo devuelto debe incluir los campos id, fecha, total, estado, tipoEntrega
-         y el sub-arreglo o string con el desglose de productos para la PedidoCard.
-    */
-    const cargarHistorialPedidos = async () => {
-      try {
-        setCargando(true);
-        // const respuesta = await fetch("URL_DEL_BACKEND/api/pedidos/mis-pedidos");
-        // const datos = await respuesta.json();
-        // setPedidos(datos);
-      } catch (error) {
-        console.error("Error al traer el historial de pedidos:", error);
-      } finally {
-        setCargando(false);
-      }
-    };
+  const cargarHistorialPedidos = async () => {
+  try {
+    setCargando(true);
 
-    cargarHistorialPedidos();
+    const respuesta = await fetch(
+      "http://localhost:3000/v1/pedidos/cliente/1"
+    );
 
-    // MIENTRAS TANTO: datosfake
-    setPedidos([
-      {
-        id: 1258,
-        fecha: "2026-06-10",
-        total: 120,
-        estado: "PENDIENTE", // Puede mutar a "EN_CAMINO", "PREPARACION", "LISTO", "ENTREGADO", "CANCELADO"
-        tipoEntrega: "ENVIO",
-      },
-      {
-        id: 1268,
-        fecha: "2026-06-10",
-        total: 10,
-        estado: "ENTREGADO",
-        tipoEntrega: "RECOJO",
-      },
-      {
-        id: 3,
-        fecha: "2026-05-20",
-        total: 60,
-        estado: "ENTREGADO",
-        tipoEntrega: "ENVIO",
-      },
-    ]);
-  }, []);
+    if (!respuesta.ok) {
+      throw new Error("Error al obtener pedidos");
+    }
+
+    const datos = await respuesta.json();
+
+    const pedidosMapeados = datos.map((pedido: any) => ({
+      id: pedido.id,
+      fecha: pedido.fechaHora,
+      total: Number(pedido.total),
+      estado: pedido.estado,
+      tipoEntrega:
+        pedido.direccionEntrega === "Venta en tienda"
+          ? "RECOJO"
+          : "ENVIO",
+    }));
+
+    setPedidos(pedidosMapeados);
+  } catch (error) {
+    console.error("Error al traer el historial de pedidos:", error);
+  } finally {
+    setCargando(false);
+  }
+};
+useEffect(() => {
+  cargarHistorialPedidos();
+}, []);
 
   const pedidosFiltrados = pedidos.filter((pedido) => {
     if (filtro === "TODOS") {

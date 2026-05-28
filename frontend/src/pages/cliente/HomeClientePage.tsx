@@ -64,7 +64,7 @@ function anteriorBanner() {
     const obtenerCatalogoHome = async () => {
       try {
         setCargando(true);
-        const res = await fetch("http://localhost:3000/api/clientes/productos");
+        const res = await fetch("http://localhost:3000/v1/productos");
         const data = await res.json();
         const productosMapeados = data.map((p: any) => ({
           id: p.id,

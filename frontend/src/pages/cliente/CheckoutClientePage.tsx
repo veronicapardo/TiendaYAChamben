@@ -76,7 +76,7 @@ export function CheckoutClientePage({ onNavigate }: Props) {
         <Logo width="260px" />
       </header>
 
-      <PaginaActualC titulo="Checkout" />
+      <PaginaActualC titulo="Checkout ✅" />
       
       <strong>
         <span style={{ fontWeight: "bold" }}>Datos para el pedido:</span>

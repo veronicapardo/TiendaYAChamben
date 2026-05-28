@@ -40,7 +40,7 @@ export function PedidosClientePage({ onNavigate }: Props) {
 
     cargarHistorialPedidos();
 
-    // MIENTRAS TANTO: Mantenemos intactos tus datos de prueba para que visualices el diseño
+    // MIENTRAS TANTO: datosfake
     setPedidos([
       {
         id: 1258,
@@ -88,7 +88,7 @@ export function PedidosClientePage({ onNavigate }: Props) {
         <Logo width="260px" />
       </header>
 
-      <PaginaActualC titulo="Mis Pedidos" />
+      <PaginaActualC titulo="Mis Pedidos 🚚" />
 
       <section className="pedidos-tabs">
         <button

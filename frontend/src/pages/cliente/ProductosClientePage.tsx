@@ -6,6 +6,7 @@ import { SearchBar } from "../../components/cliente/SearchBar";
 import { useState, useEffect } from "react";
 import { CategoriaTabs } from "../../components/cliente/CategoriaTabs";
 import { PaginaActualC } from "../../components/cliente/PaginaActualC";
+import type { ItemCarrito } from "../../types/carrito";
 
 type ProductoBackend = {
   id: number;
@@ -13,16 +14,18 @@ type ProductoBackend = {
   precio: number;
   imagen: string;
   disponible: boolean;
+  categoria: string;
 };
 
 type Props = {
   onNavigate: (pagina: string) => void;
   carrito: Array<{ id: number; cantidad: number }>;
-  onActualizarCantidad: (id: number, cambio: number) => void;
+  onActualizarCantidad: (producto: ItemCarrito, cambio: number) => void;
 };
 
 export function ProductosClientePage({ onNavigate, carrito = [], onActualizarCantidad }: Props) {
   const [busqueda, setBusqueda] = useState("");
+  const [categoriaActiva, setCategoriaActiva] = useState("Todas");
   const [productos, setProductos] = useState<ProductoBackend[]>([]);
   const [cargando, setCargando] = useState(false);
 
@@ -37,7 +40,8 @@ export function ProductosClientePage({ onNavigate, carrito = [], onActualizarCan
           nombre: p.nombre,
           precio: p.precio,
           imagen: p.imageUrl || "/decor/producto-default.jpg",
-          disponible: p.stock > 0
+          disponible: p.stock > 0,
+          categoria: p.categoria,
         }));
         setProductos(productosMapeados);
       } catch (error) {
@@ -51,10 +55,18 @@ export function ProductosClientePage({ onNavigate, carrito = [], onActualizarCan
     obtenerCatalogoCompleto();
   }, []);
 
-  const productosFiltrados = productos.filter((producto) =>
-    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  const productosFiltrados = productos.filter((producto) => {
+  const coincideBusqueda =
+    producto.nombre
+      .toLowerCase()
+      .includes(busqueda.toLowerCase());
 
+  const coincideCategoria =
+    categoriaActiva === "Todas" ||
+    producto.categoria === categoriaActiva;
+
+  return coincideBusqueda && coincideCategoria;
+});
   const carritoSeguro = carrito || [];
 
   return (
@@ -66,7 +78,10 @@ export function ProductosClientePage({ onNavigate, carrito = [], onActualizarCan
       <PaginaActualC titulo="Productos" />
 
       <SearchBar busqueda={busqueda} setBusqueda={setBusqueda} />
-      <CategoriaTabs />
+      <CategoriaTabs 
+        categoriaActiva={categoriaActiva}
+        setCategoriaActiva={setCategoriaActiva}
+      />
 
       <section className="productos-grid">
         {cargando ? (
@@ -87,8 +102,31 @@ export function ProductosClientePage({ onNavigate, carrito = [], onActualizarCan
                 cantidad={cantidadActual}
                 mostrarDisponibilidad={true} 
                 variante="vertical"
-                onAumentar={() => onActualizarCantidad(producto.id, 1)}
-                onDisminuir={() => onActualizarCantidad(producto.id, -1)}
+                onAumentar={() =>
+                  onActualizarCantidad(
+                    {
+                      id: producto.id,
+                      nombre: producto.nombre,
+                      precio: producto.precio,
+                      imagen: producto.imagen,
+                      cantidad: cantidadActual,
+                    },
+                    1
+                  )
+                }
+                
+                onDisminuir={() =>
+                  onActualizarCantidad(
+                    {
+                      id: producto.id,
+                      nombre: producto.nombre,
+                      precio: producto.precio,
+                      imagen: producto.imagen,
+                      cantidad: cantidadActual,
+                    },
+                    -1
+                  )
+                }
               />
             );
           })

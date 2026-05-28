@@ -1,53 +1,56 @@
+/* Contenedor principal de la barra de búsqueda */
 .searchbar {
   display: flex;
-
   align-items: center;
-
-  gap: 10px;
-
-  width: 100%;
-  margin: 16px 0;          /* Separa el buscador del título arriba y de las categorías abajo */
-  padding: 0 16px;         /* Evita que la barra choque con los bordes de la pantalla */
-  box-sizing: border-box;
+  padding: 8px 16px;
+  gap: 0; /* Quitamos espacios innecesarios */
 }
 
+/* El contenedor del input se expande de forma elegante */
 .search-input {
   flex: 1;
-
+  position: relative;
   display: flex;
   align-items: center;
-
-  background: white;
-
-  border: 1px solid #888;
-
-  border-radius: 20px;
-
-  padding: 12px 14px;
-
-  gap: 8px;
 }
 
+/* 🕶️ TRUCO DE MAGIA: Ponemos un icono de lupa falso usando CSS antes del input 
+   para no tener que modificar tu código TSX */
+.search-input::before {
+  content: "🔍"; 
+  position: absolute;
+  left: 16px;
+  font-size: 14px;
+  color: #94a3b8; /* Gris apagado discreto */
+  opacity: 0.7;
+  pointer-events: none; /* Hace que no estorbe al dar clic */
+}
+
+/* Transformación radical del campo de texto de feo a premium */
 .search-input input {
-  border: none;
-
-  outline: none;
-
   width: 100%;
+  padding: 12px 16px 12px 42px; /* 42px a la izquierda para dejarle espacio a la lupa */
+  font-size: 14px;
+  color: #554b33;
+  background-color: #f1f5f9; /* Fondo gris  */
+  border: 1px solid transparent; /* Sin bordes negros toscos */
+  border-radius: 30px; /* Bordes ultra redondeados de píldora */
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+/* Efecto muy sutil cuando el usuario hace clic para escribir */
+.search-input input:focus {
+  background-color: #f0eae2; /* Se oscurece un penique de forma elegante */
+  border-color: #e1d7cb;
+}
 
-  background: transparent;
+/* Marcador de posición (Placeholder) sutil */
+.search-input input::placeholder {
+  color: #94a3b8;
+  opacity: 0.8;
 }
 
 .btn-buscar {
-  border: none;
-
-  background: #f08200;
-
-  color: white;
-
-  padding: 12px 24px;
-
-  border-radius: 18px;
-
-  font-weight: bold;
+  display: none !important;
 }

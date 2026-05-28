@@ -20,7 +20,6 @@ type Props = {
 };
 
 export function PerfilClientePage({ onNavigate }: Props) {
-  // 🔒 Mantenemos intactos tus estados originales
   const [nombre, setNombre] =useState("Juan");
   const [apellido, setApellido] =useState("Pérez");
   const [email, setEmail] =useState("juan@gmail.com");

@@ -20,7 +20,7 @@ import { CheckoutClientePage } from "./pages/cliente/CheckoutClientePage";
 import { PedidosClientePage } from "./pages/cliente/PedidosClientePage";
 import { PerfilClientePage } from "./pages/cliente/PerfilClientePage";
 import { HomeClientePage } from "./pages/cliente/HomeClientePage";
-
+import type { ItemCarrito } from "./types/carrito";
 export type RolUsuario = "CLIENTE" | "CAJERO" | "REPARTIDOR" | "ADMINISTRADOR";
 
 export type UsuarioLogueado = {
@@ -36,25 +36,29 @@ function App() {
   const [vistaCajero, setVistaCajero] = useState<VistaCajero>("dashboard");
    //cliente
   const [vistaCliente, setVistaCliente] =useState("home");
-  const [carrito, setCarrito] = useState<
-  Array<{ id: number; cantidad: number }>
-> ([]); 
+  const [carrito, setCarrito] = useState<ItemCarrito[]>([]);
 function actualizarCantidadCarrito(
-  id: number,
+  producto: ItemCarrito,
   cambio: number
 ) {
   setCarrito((prev) => {
-    const existente = prev.find((p) => p.id === id);
+    const existente = prev.find((p) => p.id === producto.id);
 
-    // SI NO EXISTE Y QUIERE AÑADIR
+    // SI NO EXISTE Y SE QUIERE AÑADIR
     if (!existente && cambio > 0) {
-      return [...prev, { id, cantidad: 1 }];
+      return [
+        ...prev,
+        {
+          ...producto,
+          cantidad: 1,
+        },
+      ];
     }
 
     // SI YA EXISTE
     return prev
       .map((p) =>
-        p.id === id
+        p.id === producto.id
           ? { ...p, cantidad: p.cantidad + cambio }
           : p
       )
@@ -84,10 +88,23 @@ function actualizarCantidadCarrito(
   }
 
   if (vistaCliente === "carrito") {
-    return (
-      <CarritoClientePage onNavigate={setVistaCliente} />
-    );
-  }
+  return (
+    <CarritoClientePage 
+      onNavigate={setVistaCliente}
+      carrito={carrito}
+      onActualizarCantidad={(id, cambio) => {
+        const producto = carrito.find((p) => p.id === id);
+    
+        if (producto) {
+          actualizarCantidadCarrito(producto, cambio);
+        }
+      }}
+      onEliminarProducto={(id) => {
+        setCarrito((prev) => prev.filter((p) => p.id !== id));
+      }}
+    />
+  );
+}
 
   if (vistaCliente === "checkout") {
     return (

@@ -1,37 +1,56 @@
 .navbar-cliente {
-  padding-bottom: 100px;
   position: fixed;
-  bottom: 0;
-
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 390px;
-
-  background: white;
-
-  border-top: 1px solid #ddd;
-
+  bottom: 12px; 
+  
+  /* Adaptar el navbar: */
+  left: 50%;                  /*centro de la pantalla */
+  transform: translateX(-50%);/* Lo centramos perfectamente */
+  width: calc(100% - 32px);  /* Ocupa el ancho disponible dejando margen a los lados */
+  max-width: 448px;          /* delimita el contenedor simulado (480px - márgenes) */
+  
+  background-color: #ffffff; 
   display: flex;
   justify-content: space-around;
-
-  padding: 10px 0;
-
-  z-index: 999;
+  align-items: center;
+  padding: 10px 6px;
+  border-radius: 20px; 
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04); 
+  z-index: 1000; 
 }
-
 .navbar-cliente button {
+  background: none;
   border: none;
-
-  background: transparent;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  justify-content: center;
+  color: #94a3b8; /* Iconos y texto gris apagado por defecto */
+  font-family: inherit;
+  cursor: pointer;
   gap: 4px;
+  flex: 1;
+  transition: all 0.2s ease;
+}
 
-  color: #7c2d12;
+/* Tamaño y estilo del texto debajo del icono */
+.navbar-cliente button span {
+  font-size: 11px;
+  font-weight: 500;
+}
 
-  font-size: 12px;
+
+.navbar-cliente button:hover {
+  color: #ff7a00; /* Cambia al naranja brillante de tu logo */
+}
+
+.navbar-cliente button:hover svg {
+  transform: translateY(-2px); /* Pequeña animación interactiva del icono hacia arriba */
+  transition: transform 0.2s ease;
+}
+.navbar-cliente button.activo {
+  color: #f08200;
+}
+
+.navbar-cliente button.activo svg {
+  color: #f08200;
 }

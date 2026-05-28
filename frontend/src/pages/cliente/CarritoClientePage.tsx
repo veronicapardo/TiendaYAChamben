@@ -5,15 +5,9 @@ import { NavbarCliente } from "../../components/cliente/NavbarCliente";
 import { PaginaActualC } from "../../components/cliente/PaginaActualC";
 import { SearchBar } from "../../components/cliente/SearchBar";
 import { CarritoItem } from "../../components/cliente/CarritoItem";
-
-type ItemCarrito = {
-  id: number;
-  nombre: string;
-  precio: number;
-  cantidad: number;
-  imagen: string;
-};
-
+import type { ItemCarrito } from "../../types/carrito";
+import { ProductoCard } from "../../components/cliente/ProductoCard";
+import { useEffect } from "react";
 type Props = {
   onNavigate: (pagina: string) => void;
   carrito?: ItemCarrito[];
@@ -24,11 +18,32 @@ type Props = {
 export function CarritoClientePage({ onNavigate, carrito = [], onActualizarCantidad, onEliminarProducto }: Props) {
   const [busqueda, setBusqueda] = useState("");
   const [metodoPago, setMetodoPago] = useState("");
-
+  const [productos, setProductos] = useState<any[]>([]);
   const productosEnCarrito = carrito.filter((p) => p.cantidad > 0);
 
   const total = productosEnCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  useEffect(() => {
+  const obtenerProductos = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/v1/productos");
+      const data = await res.json();
 
+      const productosMapeados = data.map((p: any) => ({
+        id: p.id,
+        nombre: p.nombre,
+        precio: p.precio,
+        imagen: p.imageUrl || "/decor/producto-default.jpg",
+        disponible: p.stock > 0,
+      }));
+
+      setProductos(productosMapeados);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  obtenerProductos();
+}, []);
   const irAlFormularioCheckout = () => {
     if (!metodoPago) return;
     onNavigate("checkout");
@@ -42,7 +57,28 @@ export function CarritoClientePage({ onNavigate, carrito = [], onActualizarCanti
 
       <PaginaActualC titulo="Carrito" />
       <SearchBar busqueda={busqueda} setBusqueda={setBusqueda} />
-
+      <section className="sugerencias-carrito">
+        <h3>También podría gustarte</h3>
+      
+        <div className="sugerencias-scroll">
+          {productos.slice(0, 10).map((producto) => (
+            <div className="producto-sugerido" key={producto.id}>
+              <ProductoCard
+                id={producto.id}
+                nombre={producto.nombre}
+                precio={producto.precio}
+                imagen={producto.imagen}
+                disponible={producto.disponible}
+                cantidad={0}
+                variante="horizontal"
+                mostrarDisponibilidad={false}
+                onAumentar={() => {}}
+                onDisminuir={() => {}}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
       <strong><span style={{ color: "#0a0a0a" }}>Tu Carrito:</span></strong>
       {productosEnCarrito.length === 0 && <p>Tu carrito está vacío</p>}
 

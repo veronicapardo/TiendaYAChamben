@@ -1,120 +1,139 @@
-/* ==========================================================================
-   Contenedor Principal (Layout Mobile First)
-   ========================================================================== */
+/* ==========================================
+   ESTILOS GENERALES Y CONTENEDOR PRINCIPAL
+   ========================================== */
 .home-cliente {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 480px; /* Al igual que las otras pantallas para simular el celular */
-  margin: 0 auto;
-  padding: 16px 20px 100px 20px;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background-color: #ffffff;
+  background-color: #f8fafc; /* Fondo gris claro ultra limpio estilo Figma */
+  min-height: 100vh;
+  padding-bottom: 90px; /* Espacio para que el navbar flotante no tape contenido */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .cliente-header {
+  background-color: #ffffff;
+  padding: 16px;
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-/* Evitar que los componentes externos rompan el padding */
-.home-cliente > :not(.cliente-header) {
-  width: 100%;
-}
-
-/* ==========================================================================
-   Banner Novedades (Marrón con bordes redondeados asimétricos)
-   ========================================================================== */
+/* ==========================================
+   SECCIÓN BANNER DE NOVEDADES (CARRUSEL)
+   ========================================== */
 .banner-novedades {
+  margin: 20px 16px;
+  background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); /* Degradado naranja pastel del Figma */
+  border-radius: 24px; 
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
   position: relative;
-  width: 100%;
-  height: 160px;
-  background-color: #6e4d31; /* El tono marrón cálido del Figma */
-  border-radius: 28px; /* Bordes muy curvos idénticos al diseño */
-  margin: 20px 0;
-  overflow: hidden; /* Corta la imagen si sobresale del radio */
-  box-sizing: border-box;
+  box-shadow: 0 4px 15px rgba(254, 215, 170, 0.3); /* Sombra con tono naranja */
+  overflow: hidden;
+  height: 160px; /* Altura ideal fija para que se vea estilizado */
 }
 
-/* Lado izquierdo: Textos y Botón */
+/* Botones de flechas (Izquierda y Derecha) estilizados transparentes */
+.banner-arrow {
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  color: #ea580c; /* Naranja oscuro */
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.banner-arrow:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.1);
+}
+
+/* Contenido de texto dentro del banner */
 .banner-contenido {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 55%;
-  padding-left: 28px;
+  padding-left: 12px;
   z-index: 2;
 }
 
 .banner-contenido h2 {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 14px 0;
-  letter-spacing: 0.5px;
+  color: #1e293b; /* Texto oscuro moderno */
+  margin: 0 0 12px 0;
+  line-height: 1.2;
 }
 
-/* Botón Ovalado "Ver" */
+/* Botón "Ver" dentro del banner */
 .btn-banner-ver {
-  background-color: #f09200; /* Naranja corporativo */
-  color: #ffffff;
-  border: 1.5px solid #ffffff; /* Pequeño borde blanco sutil */
+  background-color: #ffffff;
+  color: #ff7a00; /* Tu naranja corporativo */
+  border: none;
+  padding: 8px 24px;
+  font-weight: 600;
+  font-size: 14px;
   border-radius: 20px;
-  padding: 6px 26px;
-  font-size: 13px;
-  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.btn-banner-ver:active {
-  transform: scale(0.95);
+.btn-banner-ver:hover {
+  background-color: #fff7ed;
+  transform: translateY(-1px);
 }
 
-/* Lado derecho: Espacio para la imagen flotante */
+/* Contenedor e Imagen del Banner */
 .banner-imagen-wrapper {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 50%;
+  flex: 1;
   height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1;
+  align-items: center;
+  position: relative;
 }
 
 .banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Si no tienes la imagen con el fondo recortado, puedes usar un clip-path o máscara */
+  max-width: 110%;
+  max-height: 110%;
+  object-fit: contain;
+  transform: scale(1.05); /* Hace que sobresalga un poquito de forma estética */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12)); /* Sombra a los productos del banner */
 }
 
-/* ==========================================================================
-   Grilla de Productos (2 Columnas perfectas)
-   ========================================================================== */
+/* ==========================================
+   GRID DE PRODUCTOS
+   ========================================== */
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Divide la pantalla exactamente a la mitad */
-  gap: 18px 16px; /* Espaciado entre filas y columnas */
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 4px;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas para celular y 6 laptop */
+  gap: 16px;
+  padding: 0 16px 20px 16px;
 }
 
-/* Ajustes estructurales genéricos para asegurar que tus <ProductoCard /> hereden el diseño */
-.productos-grid > article {
-  background: #ffffff;
-  border: 1.5px solid #111111; /* Contorno negro del Figma */
-  border-radius: 20px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
+.cargando-texto {
+  grid-column: span 2;
+  text-align: center;
+  color: #8b8364;
+  font-size: 14px;
+  padding: 20px;
+}
+
+/* ==========================================
+   DETALLES ESTÉTICOS COMPLEMENTARIOS
+   ========================================== */
+/* Asegura que los textos auxiliares y espaciados tengan armonía visual */
+h1, h2, p, span {
+  margin: 0;
 }

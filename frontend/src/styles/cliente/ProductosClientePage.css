@@ -1,17 +1,13 @@
 
 .productos-cliente-page {
-  padding-bottom: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  max-width: 480px; /* Ajuste ideal para simular pantalla móvil */
-  margin: 0 auto;
-  padding: 20px 16px 90px 16px; /* Padding inferior extra para que el Navbar fijo no tape contenido */
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
+  max-width: 480px; /* El mismo límite del Home */
+  margin: 0 auto;   /* entra la pantalla en tu laptop */
+  background-color: #f8fafc;
   min-height: 100vh;
+  padding-bottom: 100px; /* Espacio para que el Navbar no tape las últimas cards */
+  position: relative;
+  box-sizing: border-box;
 }
 
 .cliente-header {
@@ -61,4 +57,65 @@
   justify-content: space-around;
   align-items: center;
   z-index: 100;
+}
+/* Cambiamos el Grid de 2 columnas a 1 sola columna de filas horizontales */
+.productos-cliente-page .productos-grid {
+  display: flex;
+  flex-direction: column; /* Una tarjeta debajo de la otra */
+  gap: 12px;
+  padding: 0 16px;
+}
+
+/* 🔄 TRANSFORMACIÓN DE LA TARJETA A FILA HORIZONTAL */
+.productos-cliente-page .producto-card {
+  display: flex;
+  flex-direction: row !important; /* Forza el diseño de izquierda a derecha */
+  align-items: center;
+  justify-content: gap;
+  min-height: 110px !important; /* Más petisa y compacta */
+  padding: 12px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  width: 100%;
+}
+
+/* Espacio para la foto a la izquierda */
+.productos-cliente-page .producto-img-wrapper {
+  width: 80px !important; /* Tamaño fijo pequeño de miniatura */
+  height: 80px !important;
+  background: transparent; /* Quitamos fondos grises toscos */
+  padding: 4px;
+  flex-shrink: 0; /* Evita que la foto se aplaste */
+}
+
+.productos-cliente-page .producto-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Agrupamos los textos (Título, Disponibilidad, Precio) a la derecha */
+.productos-cliente-page .producto-card h3 {
+  text-align: left !important;
+  font-size: 15px;
+  margin: 0 0 4px 0;
+  color: #1e293b;
+}
+
+/* Alineación de precios y stock en bloque como tu lista de Figma */
+.productos-cliente-page .precio {
+  font-size: 16px;
+  color: #c98a4f;
+  margin: 4px 0 0 0;
+  text-align: left;
+}
+
+/* El botón o contador se van al extremo derecho automáticamente */
+.productos-cliente-page .btn-anadir,
+.productos-cliente-page .contador {
+  width: 200px !important; /* Más angosto para que entre al borde derecho */
+  margin-left: auto; /* Empuja el control al extremo derecho */
+  margin-top: 0;
 }

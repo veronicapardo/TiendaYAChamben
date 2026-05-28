@@ -1,51 +1,269 @@
+
+.pedido-card-contenedor {
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 16px;
+  margin: 10px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.pedido-card-contenedor:has(.pedido-detalle) {
+  background: #fffbf7; /* Un fondo cálido sutil cuando se despliega */
+  border: 1px solid #fed7aa;
+}
+
+/* HEADER DEL PEDIDO */
+.pedido-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pedido-card-header strong {
+  font-size: 16px;
+  color: #1e293b;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.pedido-fecha {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.pedido-estado {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Pendiente (Amarillo Alerta) */
+.pedido-estado.pendiente {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+/* En Preparación (Azul Eléctrico) */
+.pedido-estado.en_preparacion {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* En Camino o Listo (Naranja Enérgico) */
+.pedido-estado.en_camino,
+.pedido-estado.listo_recojo {
+  background-color: #ffedd5;
+  color: #ea580c;
+}
+
+/* Entregado (Verde Éxito) */
+.pedido-estado.entregado {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+/* Cancelado / Fallido (Rojo Peligro) */
+.pedido-estado.cancelado,
+.pedido-estado.entrega_fallida {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+.pedido-detalle {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #cbd5e1; /* Línea divisoria punteada estética */
+}
+
+.pedido-tipo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 12px 0;
+}
+
+.pedido-productos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.producto-mini {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #334155;
+}
+
+.producto-mini strong {
+  color: #0f172a;
+}
+
+.pedido-total {
+  text-align: right;
+  font-size: 16px;
+  color: #0f172a;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 16px;
+}
+
+/* ==========================================
+   EL STEPPER HORIZONTAL (IGUAL AL FIGMA)
+   ========================================== */
 .pedido-stepper-contenedor {
-  margin-top: 15px;
-  padding: 10px 0;
+  margin-top: 16px;
 }
 
 .stepper-titulo {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin: 0 0 16px 0;
 }
 
+/* Contenedor Flex en fila para que NO se caigan los números */
 .pedido-stepper {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
-  gap: 5px;
+  padding-bottom: 10px;
 }
 
-/* Formato base de cada paso */
-.pedido-stepper .step {
+/* 📏 LÍNEA CONECTOR DE FONDO ESTILO FIGMA */
+.pedido-stepper::before {
+  content: "";
+  position: absolute;
+  top: 15px; /* Centrado con los círculos */
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background-color: #cbd5e1; /* Gris apagado por defecto */
+  z-index: 1;
+}
+
+/* CADA BLOQUE DE PASO */
+.step {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 2;
   flex: 1;
-  text-align: center;
-  font-size: 11px;
-  color: #9ca3af; /* Color gris apagado por defecto */
 }
 
-.pedido-stepper .step .circle {
-  width: 24px;
-  height: 24px;
+/* Burbuja del número */
+.step .circle {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: #e5e7eb;
+  background-color: #e2e8f0; /* Color inactivo */
+  color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #6b7280;
+  font-size: 13px;
+  font-weight: 700;
+  border: 3px solid #ffffff; /* Sello blanco alrededor */
+  transition: all 0.3s ease;
 }
 
-.pedido-stepper .step.activo {
+/* Texto pequeño inferior del paso */
+.step span {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 6px;
+  max-width: 65px;
+  line-height: 1.2;
+}
+
+.step.activo .circle {
+  background-color: #ff7a00; /* Naranja encendido de éxito */
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.2); /* Brillo de paso actual */
+}
+/* 1. Escondemos el número original del TSX volviendo el texto invisible */
+.step .circle {
+  font-size: 0 !important; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step:nth-child(1) .circle::before {
+  content: "⏳"; 
+  font-size: 16px; 
+}
+
+
+.step:nth-child(2) .circle::before {
+  content: "🕔"; 
+  font-size: 16px;
+}
+
+.step:nth-child(3) .circle::before {
+  content: "📦"; 
+  font-size: 16px;
+}
+
+.step:nth-child(4) .circle::before {
+  content: "🛵"; 
+  font-size: 16px;
+}
+
+.step:last-child .circle::before {
+  content: " 🤩 "; 
+  font-size: 16px;
+}
+
+.step.activo span {
   color: #ff7a00;
+  font-weight: 700;
 }
 
-.pedido-stepper .step.activo .circle {
-  background-color: #ff7a00;
-  color: white;
+/* ==========================================
+   ALERTAS Y BOTÓN CANCELAR
+   ========================================== */
+.alerta-error {
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+  color: #991b1b;
+  padding: 10px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* Botón Cancelar llamativo con estética destructiva suave */
+.btn-cancelar {
+  width: 100%;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #fecaca;
+  transform: translateY(-1px);
 }

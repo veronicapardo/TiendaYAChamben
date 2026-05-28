@@ -1,33 +1,12 @@
 .pagina-actual {
-  /* 1. Posicionamiento en la pantalla */
-  position: sticky;
-  top: 0 ;
-  left: 1000px;
-  width: 100%;
-  z-index: 998; /* Un nivel abajo del navbar si es que este se cruza */
-
-  /* 2. Estilo del contenedor */
-  background-color: #f56e07;
-  border-bottom: 1px solid #f3f4f6f3; /* Una línea sutil abajo */
-  padding: 16px ;
-  border-radius: 20px 20px 20px 20px;
-  /*margen exterior*/
-  margin: 16px ;
-
-  /* 3. Alineación del texto */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 16px 16px 8px 16px;
+  background-color: transparent; /* Eliminamos fondos pesados */
 }
 
-
-
 .pagina-actual h1 {
-  /* 4. Estilizado del título */
-  font-size: 18px;
-  font-weight: 600;
-  color: #f9f9f9; 
+  font-size: 26px;
+  font-weight: 800; /* Texto bien grueso e imponente */
+  color: #3c0d02; /* Azul oscuro casi negro, ultra elegante */
+  letter-spacing: -0.5px; /* Junta las letras un poquitito estilo premium */
   margin: 0;
-  text-transform: capitalize; /* Asegura que la primera letra sea mayúscula */
-  letter-spacing: 0.5px;
 }

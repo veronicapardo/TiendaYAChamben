@@ -30,7 +30,7 @@ export function ProductoCard({
 
   return (
     <article className={`producto-card ${variante}`}>
-      <img src={imagen} alt={nombre} className="producto-imagen" />
+      <img className="producto-imagen" src={imagen} alt={nombre}  />
       <div className="producto-info-wrapper">
         <h3>{nombre}</h3>
         <p className="precio">Bs. {precio}</p>

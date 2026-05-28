@@ -24,7 +24,7 @@ export function DashboardView() {
   return (
     <div className="dashboard-container">
 
-      {/* CARDS */}
+      
       <div className="dashboard-cards">
 
         <div className="dashboard-card">
@@ -59,10 +59,10 @@ export function DashboardView() {
 
       </div>
 
-      {/* CONTENIDO */}
+      
       <div className="dashboard-grid">
 
-        {/* GRAFICA */}
+        
         <div className="chart-box">
           <h3>Ventas de los últimos 7 días</h3>
 
@@ -96,7 +96,7 @@ export function DashboardView() {
           </div>
         </div>
 
-        {/* STOCK BAJO */}
+       
         <div className="stock-box">
 
           <div className="stock-header">
@@ -104,10 +104,12 @@ export function DashboardView() {
             <span>Ver todos</span>
           </div>
 
+          
           <div className="stock-item">
+
             <img
-              src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200"
-              alt=""
+              src="/productos/Nuggets Dino.svg"
+              alt="Nuggets Dino"
             />
 
             <div>
@@ -115,12 +117,15 @@ export function DashboardView() {
             </div>
 
             <span>2 unidades</span>
+
           </div>
 
+          
           <div className="stock-item">
+
             <img
-              src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200"
-              alt=""
+              src="/productos/Leche Pil Deslactosada.svg"
+              alt="Leche Pil"
             />
 
             <div>
@@ -128,12 +133,15 @@ export function DashboardView() {
             </div>
 
             <span>1 unidad</span>
+
           </div>
 
+          
           <div className="stock-item">
+
             <img
-              src="https://images.unsplash.com/photo-1589985270958-3496d5f38a5d?w=200"
-              alt=""
+              src="/productos/Chisps Ahoy!.svg"
+              alt="Chips Ahoy"
             />
 
             <div>
@@ -141,13 +149,30 @@ export function DashboardView() {
             </div>
 
             <span>3 unidades</span>
+
+          </div>
+
+          
+          <div className="stock-item">
+
+            <img
+              src="/productos/Yogurt Pil.svg"
+              alt="Yogurt Pil"
+            />
+
+            <div>
+              <p>Yogurt Pil Bebible Frutilla 1 L</p>
+            </div>
+
+            <span>2 unidades</span>
+
           </div>
 
         </div>
 
       </div>
 
-      {/* TABLA */}
+      
       <div className="recent-orders">
 
         <h3>Pedidos recientes</h3>

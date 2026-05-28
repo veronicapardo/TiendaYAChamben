@@ -1,3 +1,155 @@
+.admin-layout{
+  display:flex;
+  height:100vh;
+  background:#f5f5f5;
+}
+
+.main-content{
+  flex:1;
+  padding:30px;
+  overflow-y:auto;
+}
+
+.content-area{
+  width:100%;
+}
+
+.sidebar{
+  width:260px;
+  background:white;
+  padding:24px 20px;
+  border-right:1px solid #ececec;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.logo-container{
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+}
+
+.logo-img{
+  width:180px;
+  object-fit:contain;
+}
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:20px;
+}
+
+.menu-btn{
+  width:100%;
+  border:none;
+  background:transparent;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  padding:16px 18px;
+  border-radius:14px;
+
+  font-size:17px;
+  font-weight:600;
+
+  cursor:pointer;
+  transition:0.2s;
+
+  color:#2b2b2b;
+}
+
+.menu-btn:hover{
+  background:#f7f7f7;
+}
+
+.menu-btn.active{
+  background:#d89000;
+  color:white;
+}
+
+.admin-user-modern{
+  margin-top:auto;
+  position:relative;
+}
+
+.admin-dropdown{
+  width:100%;
+  background:#f4d7a7;
+
+  border:none;
+  border-radius:14px;
+
+  padding:14px 16px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  cursor:pointer;
+  font-weight:600;
+}
+
+.admin-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.admin-circle{
+  width:30px;
+  height:30px;
+
+  border-radius:50%;
+  background:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+.dropdown-menu{
+  margin-top:10px;
+
+  background:white;
+  border-radius:14px;
+
+  overflow:hidden;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.dropdown-menu button{
+  width:100%;
+  border:none;
+  background:white;
+
+  padding:14px 16px;
+  text-align:left;
+
+  cursor:pointer;
+  font-size:15px;
+
+  transition:0.2s;
+}
+
+.dropdown-menu button:hover{
+  background:#f5f5f5;
+}
+
+.logout-item{
+  color:#dc2626;
+  font-weight:600;
+}
+
 .dashboard-container{
   display:flex;
   flex-direction:column;
@@ -13,10 +165,13 @@
 .dashboard-card{
   background:white;
   border-radius:16px;
+
   padding:24px;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
+
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -50,32 +205,16 @@
 .recent-orders{
   background:white;
   border-radius:16px;
+
   padding:24px;
+
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-.fake-chart{
-  height:250px;
-  margin-top:20px;
-  border-radius:12px;
-  background:linear-gradient(to top,#fde68a,#fff);
-  position:relative;
-  overflow:hidden;
-}
-
-.line{
-  position:absolute;
+.chart-real{
   width:100%;
-  height:100%;
-  background:
-  linear-gradient(
-    135deg,
-    transparent 0%,
-    transparent 30%,
-    #f59e0b 30%,
-    #f59e0b 34%,
-    transparent 34%
-  );
+  height:300px;
+  margin-top:20px;
 }
 
 .stock-header{
@@ -101,6 +240,7 @@
 .stock-item img{
   width:55px;
   height:55px;
+
   border-radius:10px;
   object-fit:cover;
 }
@@ -128,6 +268,7 @@
 .estado{
   padding:6px 12px;
   border-radius:999px;
+
   font-size:12px;
   font-weight:600;
 }
@@ -145,92 +286,4 @@
 .entregado{
   background:#dcfce7;
   color:#16a34a;
-}
-.chart-real{
-  width:100%;
-  height:300px;
-  margin-top:20px;
-}
-.admin-layout{
-  display:flex;
-  min-height:100vh;
-  background:#f5f5f5;
-}
-
-.sidebar{
-  width:280px;
-  background:white;
-  padding:24px;
-  display:flex;
-  flex-direction:column;
-  gap:30px;
-  border-right:1px solid #eee;
-}
-
-.logo-text{
-  font-size:42px;
-  font-weight:800;
-  color:#f59e0b;
-}
-
-.menu{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  margin-top:30px;
-}
-
-.menu-btn{
-  border:none;
-  background:transparent;
-  padding:16px;
-  border-radius:14px;
-  text-align:left;
-  font-size:18px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.menu-btn.active{
-  background:#f59e0b;
-  color:white;
-}
-
-.main-content{
-  flex:1;
-  padding:30px;
-}
-
-.topbar{
-  margin-bottom:30px;
-}
-
-.admin-user{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.logout-btn{
-  border:none;
-  background:#ef4444;
-  color:white;
-  padding:12px;
-  border-radius:12px;
-  cursor:pointer;
-}
-.main-content{
-  flex:1;
-  padding:30px;
-  background:#f5f5f5;
-  overflow-y:auto;
-}
-
-.content-area{
-  width:100%;
-}
-
-.admin-layout{
-  display:flex;
-  height:100vh;
 }

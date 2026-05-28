@@ -10,6 +10,9 @@ import com.tiendaya.models.enums.EstadoVenta;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.tiendaya.dtos.CreateVentaRapidaDto;
+
+import com.tiendaya.dtos.ConvertirPedidoVentaDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +77,39 @@ public class VentaController {
     public ResponseEntity<?> createVenta(@Valid @RequestBody CreateVentaDto dto) {
         try {
             Venta venta = ventaService.createVenta(dto);
+
+            return ResponseEntity
+                    .status(201)
+                    .body(convertirAResponseDto(venta));
+        } catch (IllegalArgumentException error) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageDto(error.getMessage()));
+        }
+    }
+
+    @PostMapping("/rapida")
+    public ResponseEntity<?> createVentaRapida(@Valid @RequestBody CreateVentaRapidaDto dto) {
+        try {
+            Venta venta = ventaService.createVentaRapida(dto);
+
+            return ResponseEntity
+                    .status(201)
+                    .body(convertirAResponseDto(venta));
+        } catch (IllegalArgumentException error) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageDto(error.getMessage()));
+        }
+    }
+
+    @PostMapping("/pedido/{pedidoId}/convertir-venta")
+    public ResponseEntity<?> convertirPedidoEnVenta(
+            @PathVariable Integer pedidoId,
+            @Valid @RequestBody ConvertirPedidoVentaDto dto
+    ) {
+        try {
+            Venta venta = ventaService.convertirPedidoEnVenta(pedidoId, dto);
 
             return ResponseEntity
                     .status(201)

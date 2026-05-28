@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { VistaCajero } from "../../types/navigation";
 import type { UsuarioLogueado } from "../../App";
 import "../../styles/dashboard-cajero.css";
 import {
@@ -33,8 +34,9 @@ import {
 
 type Props = {
   usuario: UsuarioLogueado;
+  onNavigate: (vista: VistaCajero) => void;
 };
-
+``
 function formatearBolivianos(valor: number) {
   return `Bs. ${Number(valor).toLocaleString("es-BO", {
     minimumFractionDigits: 2,
@@ -119,7 +121,7 @@ function formatearTipoAlerta(tipo: string) {
   return tipos[tipo] || tipo;
 }
 
-export function DashboardCajeroPage({ usuario }: Props) {
+export function DashboardCajeroPage({ usuario, onNavigate }: Props) {
   const [dashboard, setDashboard] = useState<CajeroDashboardResponse | null>(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
@@ -181,30 +183,30 @@ export function DashboardCajeroPage({ usuario }: Props) {
         </div>
 
         <nav className="cajero-menu">
-          <button className="menu-item active">
+          <button className="menu-item active" onClick={() => onNavigate("dashboard")}>
             <LayoutDashboard size={22} />
             <span>Dashboard</span>
           </button>
 
-          <button className="menu-item">
+          <button className="menu-item" onClick={() => onNavigate("nueva-venta")}>
             <ShoppingCart size={22} />
             <span>Nueva Venta</span>
           </button>
 
-          <button className="menu-item">
-            <ClipboardList size={22} />
-            <span>Registrar Pedido</span>
-          </button>
+          <button className="menu-item" onClick={() => onNavigate("registrar-pedido")}>
+  <ClipboardList size={22} />
+  <span>Registrar Pedido</span>
+</button>
 
-          <button className="menu-item">
+          <button className="menu-item" onClick={() => onNavigate("buscar-producto")}>
             <Search size={22} />
             <span>Buscar Producto</span>
           </button>
 
-          <button className="menu-item">
-            <PackageCheck size={22} />
-            <span>Pedidos Pendientes</span>
-          </button>
+          <button className="menu-item" onClick={() => onNavigate("pedidos-pendientes")}>
+  <PackageCheck size={22} />
+  <span>Pedidos Pendientes</span>
+</button>
 
           <button className="menu-item">
             <Users size={22} />
@@ -265,7 +267,7 @@ export function DashboardCajeroPage({ usuario }: Props) {
         </header>
 
         <section className="quick-actions">
-          <button className="quick-card venta">
+          <button className="quick-card venta" onClick={() => onNavigate("nueva-venta")}>
             <ShoppingCart size={48} />
             <div>
               <h2>Nueva venta</h2>
@@ -273,7 +275,7 @@ export function DashboardCajeroPage({ usuario }: Props) {
             </div>
           </button>
 
-          <button className="quick-card delivery">
+          <button className="quick-card delivery" onClick={() => onNavigate("registrar-pedido")}>
             <ShoppingBag size={46} />
             <div>
               <h2>Pedido delivery</h2>
@@ -281,7 +283,7 @@ export function DashboardCajeroPage({ usuario }: Props) {
             </div>
           </button>
 
-          <button className="quick-card buscar">
+          <button className="quick-card buscar" onClick={() => onNavigate("buscar-producto")}>
             <Search size={50} />
             <div>
               <h2>Buscar producto</h2>
@@ -289,7 +291,7 @@ export function DashboardCajeroPage({ usuario }: Props) {
             </div>
           </button>
 
-          <button className="quick-card caja">
+          <button className="quick-card caja" onClick={() => onNavigate("cierre-caja")}>
             <WalletCards size={48} />
             <div>
               <h2>Cierre de caja</h2>
@@ -415,15 +417,17 @@ export function DashboardCajeroPage({ usuario }: Props) {
                       <p>{formatearMetodoPago(pedido.metodoPago)}</p>
                     </div>
 
-                    <button className="btn-detalle">Ver detalle</button>
+                    <button className="btn-detalle" onClick={() => onNavigate("pedidos-pendientes")}>
+  Ver detalle
+</button>
                   </article>
                 );
               })
             )}
 
-            <button className="ver-todo">
-              Ver todos los pedidos <ChevronRight size={18} />
-            </button>
+            <button className="ver-todo" onClick={() => onNavigate("pedidos-pendientes")}>
+  Ver todos los pedidos <ChevronRight size={18} />
+</button>
           </div>
 
           <div className="panel alertas-panel">
@@ -437,8 +441,12 @@ export function DashboardCajeroPage({ usuario }: Props) {
 
                 return (
                   <article className="alerta-item" key={`${alerta.tipo}-${alerta.productoNombre}`}>
-                    <div className={`alerta-icon ${color}`}>
-                      <AlertTriangle size={22} />
+                    <div className={`alerta-icon ${alerta.imageUrl ? "con-imagen" : color}`}>
+                      {alerta.imageUrl ? (
+                        <img src={alerta.imageUrl} alt={alerta.productoNombre} />
+                      ) : (
+                        <AlertTriangle size={22} />
+                      )}
                     </div>
 
                     <div>

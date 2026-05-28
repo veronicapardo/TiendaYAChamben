@@ -40,6 +40,7 @@ public class ProductoService implements IProductoService {
         producto.setPrecio(dto.precio());
         producto.setStock(dto.stock());
         producto.setFechaVencimiento(convertirFecha(dto.fechaVencimiento()));
+        producto.setImageUrl(dto.imageUrl());
         producto.setActivo(true);
 
         return productoRepository.save(producto);
@@ -73,6 +74,10 @@ public class ProductoService implements IProductoService {
 
         if (dto.fechaVencimiento() != null) {
             producto.setFechaVencimiento(convertirFecha(dto.fechaVencimiento()));
+        }
+
+        if (dto.imageUrl() != null) {
+            producto.setImageUrl(dto.imageUrl());
         }
 
         if (dto.activo() != null) {

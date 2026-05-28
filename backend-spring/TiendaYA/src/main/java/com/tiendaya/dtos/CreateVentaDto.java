@@ -17,6 +17,8 @@ public record CreateVentaDto(
 
         EstadoVenta estadoVenta,
 
+        BigDecimal costoEnvio,
+
         String comprobante
 ) {
 }

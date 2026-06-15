@@ -1,5 +1,5 @@
 import type { RolUsuario } from "../App";
-import logoTiendaYa from "../assets/decor/logoTiendaYA.png";
+import logoTiendaYa from "../assets/decor/Inicio.png";
 
 type Props = {
   onSeleccionarRol: (rol: RolUsuario) => void;

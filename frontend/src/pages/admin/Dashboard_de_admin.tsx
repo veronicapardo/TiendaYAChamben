@@ -45,7 +45,7 @@ export const Dashboard_de_admin = ({
         <div className="logo-container">
 
           <img
-            src="/logo.svg"
+            src="/logo tienda-Photoroom 1.svg"
             alt="Logo TiendaYa"
             className="logo-img"
           />

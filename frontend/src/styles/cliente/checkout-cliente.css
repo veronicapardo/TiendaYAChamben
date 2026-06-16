@@ -1,0 +1,250 @@
+
+.checkout-cliente-page {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fbfbfb;
+  min-height: 100vh;
+  padding: 16px 20px 120px 20px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.checkout-cliente-page > strong {
+  display: block;
+  font-size: 18px;
+  color: #2b1810;
+  margin: 16px 0;
+}
+
+/*    FORMULARIO EN FORMATO DE DOS COLUMNAS */
+.checkout-form {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Columna izquierda para labels, derecha para inputs */
+  align-items: center;
+  row-gap: 16px;
+  column-gap: 12px;
+  margin-bottom: 24px;
+}
+
+
+.checkout-form label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form textarea {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #e6f0fa; 
+  border: 1px solid transparent;
+  border-radius: 14px; 
+  font-size: 14px;
+  color: #334155;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+  border-color: #bad5f0;
+}
+
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+
+.checkout-form input:disabled {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.checkout-form textarea {
+  resize: none;
+  font-family: inherit;
+}
+
+.tipo-entrega {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+
+.tipo-entrega label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #475569;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+.tipo-entrega input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  outline: none;
+  background-color: #ffffff;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tipo-entrega input[type="radio"]:checked {
+  border-color: #22c55e;
+}
+
+.tipo-entrega input[type="radio"]:checked::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #22c55e;
+}
+
+/* 
+   CASILLA: GUARDAR DATOS (AUTOCOMPLETAR) */
+.autocompletar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #334155;
+}
+
+/* Interruptor circular verde */
+.autocompletar input[type="checkbox"] {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.autocompletar input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); /* Esfera verde Figma */
+  border-color: #22c55e;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+/* 
+   CUADRO DE RESUMEN DEL PEDIDO (TARJETA INFERIOR)*/
+.resumen-checkout {
+  background: #fff5eb; 
+  border: 1px solid #ffe3cb;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.resumen-checkout p {
+  font-size: 15px;
+  color: #475569;
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.resumen-checkout hr {
+  border: none;
+  border-top: 1px solid #ffd1b3;
+  margin: 12px 0;
+}
+
+.resumen-checkout strong {
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+  color: #1e293b;
+  font-weight: 800;
+}
+
+/*
+   BOTONES DE ACCIÓN (FINALIZAR / CANCELAR) */
+.checkout-botones {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.checkout-botones button {
+  flex: 1;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 18px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+/* Botón destructivo / Cancelar */
+.checkout-botones .btn-cancelar {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.checkout-botones .btn-cancelar:hover {
+  background-color: #fecaca;
+}
+
+/* Botón constructivo / Finalizar Pedido */
+.checkout-botones .btn-finalizar {
+  background: #ff7a00; 
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.2);
+}
+
+.checkout-botones .btn-finalizar:hover:not(:disabled) {
+  background: #e06b00;
+  transform: translateY(-1px);
+}
+
+.checkout-botones .btn-finalizar:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.checkout-mensaje {
+  width: min(920px, calc(100% - 32px));
+  margin: 14px auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.checkout-mensaje.exito {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.checkout-mensaje.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}

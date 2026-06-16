@@ -1,0 +1,249 @@
+/* =======================================================
+   CONTENEDOR PRINCIPAL ESTILO CELULAR
+   ======================================================= */
+.perfil-cliente-page {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fbfbfb;
+  min-height: 100vh;
+  padding: 16px 24px 120px 24px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =======================================================
+   SECCIÓN AVATAR (CÍRCULO CON DEGRADADO Y CHECK VERDE)
+   ======================================================= */
+.perfil-avatar-seccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.avatar-contenedor {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 12px;
+}
+
+/* Círculo del avatar con el degradado cálido del Figma */
+.avatar-circulo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd1b3 0%, #ffedd5 50%, #fed7aa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff7a00; /* Icono Lucide en tono naranja de la marca */
+  box-shadow: 0 8px 24px rgba(255, 122, 0, 0.15);
+  border: 3px solid #ffffff;
+  box-sizing: border-box;
+}
+
+/* Emblema de verificación flotante (Check verde) */
+.avatar-check {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background-color: #22c55e; /* Verde brillante del Figma */
+  color: #ffffff;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+}
+
+.perfil-nombre-usuario {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2b1810;
+  margin: 0;
+}
+
+/* =======================================================
+   TARJETA DE INFORMACIÓN PERSONAL (DEGRADADO LLAMATIVO)
+   ======================================================= */
+.perfil-tarjeta-gris {
+  background: linear-gradient(90deg, #ffedd5 0%, #fee2e2 100%); /* Degradado cálido suave */
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border: 1px solid #ffdec2;
+  box-shadow: 0 6px 18px rgba(255, 122, 0, 0.06);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Efecto visual por si está en modo edición */
+.perfil-tarjeta-gris.en-edicion {
+  background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #bbf7d0;
+}
+
+.tarjeta-info-contenido strong {
+  display: block;
+  font-size: 15px;
+  color: #2b1810;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.tarjeta-subtexto {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Campos de entrada cuando se activa la edición */
+.inputs-edicion-perfil input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ffd1b3;
+  border-radius: 8px;
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.8);
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* =======================================================
+   MENÚ DE OPCIONES (LUCES INTERACTIVAS INDIVIDUALES)
+   ======================================================= */
+.perfil-menu-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* Espaciado entre bloques sueltos estilo Figma */
+  margin-bottom: 32px;
+}
+
+/* Contenedor base de cada fila de opción */
+.opcion-item {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.opcion-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.opcion-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.opcion-texto {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* --- ASIGNACIÓN DE COLORES INDIVIDUALES A LOS ICONOS (FIGMA) --- */
+
+/* 📍 1. Direcciones guardadas (Borde y detalles azules) */
+.opcion-item:nth-child(1) {
+  border-bottom: 3px solid #3b82f6; 
+}
+.opcion-item:nth-child(1) .opcion-izquierda svg {
+  color: #3b82f6;
+}
+
+/* 💳 2. Métodos de pago (Borde y detalles verdes) */
+.opcion-item:nth-child(2) {
+  border-bottom: 3px solid #22c55e;
+}
+.opcion-item:nth-child(2) .opcion-izquierda svg {
+  color: #22c55e;
+}
+
+/* 🔔 3. Historial de notificaciones (Borde y detalles morados) */
+.opcion-item:nth-child(3) {
+  border-bottom: 3px solid #a855f7;
+}
+.opcion-item:nth-child(3) .opcion-izquierda svg {
+  color: #a855f7;
+}
+
+/* =======================================================
+   BOTONES Y ACCIONES (BOTÓN DE LÁPIZ Y BOTÓN CERRAR SESIÓN)
+   ======================================================= */
+
+/* Estilización de los botones circulares transparentes con lápiz */
+.btn-editar-lapiz {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-editar-lapiz:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+}
+
+/* Botón flotante para guardar cambios (Check Verde) */
+.btn-guardar-cambios {
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 3px 10px rgba(34, 197, 94, 0.3);
+}
+
+.perfil-footer-acciones {
+  margin-top: auto; /* Empuja el botón hacia la parte inferior */
+  padding: 0 8px;
+}
+
+.btn-logout {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff4d4d 100%); /* Rojo enérgico del Figma */
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 77, 77, 0.4); /* Sombra roja difuminada */
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: linear-gradient(135deg, #ff4d4d 0%, #e63939 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 77, 77, 0.5);
+}
+
+.btn-logout span {
+  font-weight: 700;
+}

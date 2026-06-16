@@ -1,0 +1,166 @@
+@startuml
+title Diagrama Entidad-Relación — Sistema TiendaYA
+
+' Layout principal izquierda
+together {
+  entity "Usuario" as usuario {
+    * id : int <<PK>>
+    --
+    nombre : varchar
+    correo : varchar
+    contraseña : varchar
+    rol : varchar
+    activo : boolean
+    createdAt : timestamp
+    updatedAt : timestamp
+  }
+
+  entity "Proveedor" as proveedor {
+    * id : int <<PK>>
+    --
+    nombre : varchar
+    contactoNombre : varchar
+    telefono : varchar
+    email : varchar
+    activo : boolean
+    createdAt : timestamp
+    updatedAt : timestamp
+  }
+}
+
+entity "Cliente" as cliente {
+  * id : int <<PK>>
+  --
+  nombre : varchar
+  correo : varchar
+  telefono : varchar
+  direccion : varchar
+  activo : boolean
+  * usuarioId : int <<FK>>
+}
+
+entity "Repartidor" as repartidor {
+  * id : int <<PK>>
+  --
+  nombre : varchar
+  telefono : varchar
+  estadoDisponible : boolean
+  activo : boolean
+  * usuarioId : int <<FK>>
+}
+
+entity "Pedido" as pedido {
+  * id : int <<PK>>
+  --
+  direccionEntrega : varchar
+  estado : varchar
+  total : decimal
+  fechaCreacion : timestamp
+  * clienteId : int <<FK>>
+  * repartidorId : int <<FK>>
+}
+
+entity "PedidoDetalle" as pedidoDetalle {
+  * id : int <<PK>>
+  --
+  cantidad : int
+  precioUnitario : decimal
+  subtotal : decimal
+  * pedidoId : int <<FK>>
+  * productoId : int <<FK>>
+}
+
+entity "Producto" as producto {
+  * id : int <<PK>>
+  --
+  nombre : varchar
+  categoria : varchar
+  precio : decimal
+  stock : int
+  stockMinimo : int
+  fechaVencimiento : date
+  imageUrl : varchar
+  activo : boolean
+  createdAt : timestamp
+  updatedAt : timestamp
+}
+
+entity "Pago" as pago {
+  * id : int <<PK>>
+  --
+  metodo : varchar
+  monto : decimal
+  estadoPago : varchar
+  fechaPago : timestamp
+  * pedidoId : int <<FK>>
+}
+
+entity "Venta" as venta {
+  * id : int <<PK>>
+  --
+  fechaVenta : timestamp
+  montoTotal : decimal
+  estadoVenta : varchar
+  canal : varchar
+  activo : boolean
+  * pedidoId : int <<FK>>
+  * pagoId : int <<FK>>
+}
+
+entity "Factura" as factura {
+  * id : int <<PK>>
+  --
+  numeroFactura : varchar
+  fechaEmision : timestamp
+  montoTotal : decimal
+  * ventaId : int <<FK>>
+}
+
+entity "CierreCaja" as cierreCaja {
+  * id : int <<PK>>
+  --
+  fecha : date
+  totalEfectivo : decimal
+  totalQR : decimal
+  totalTransferencia : decimal
+  totalGeneral : decimal
+  diferencia : decimal
+  usuarioCierre : varchar
+  createdAt : timestamp
+}
+
+' Relaciones de acceso
+usuario ||--o| cliente : "es"
+usuario ||--o| repartidor : "es"
+
+' Relaciones de pedido
+cliente ||--o{ pedido : "realiza"
+repartidor ||--o{ pedido : "asignado a"
+
+' Relaciones de detalle
+pedido ||--|{ pedidoDetalle : "contiene"
+pedidoDetalle }o--|| producto : "incluye"
+
+' Relaciones de pago separadas para evitar cruce
+pedido ||--o| pago : "registra"
+
+' Relaciones de venta separadas
+pedido ||--o| venta : "genera"
+venta }o--|| pago : "respaldada por"
+venta ||--o| factura : "emite"
+
+' CierreCaja sin FK directa
+note bottom of cierreCaja
+  Consolida información calculada
+  desde Venta y Pago.
+  Sin FK directa.
+end note
+
+' Proveedor sin FK directa
+note bottom of proveedor
+  Entidad independiente.
+  Sin relación directa
+  con Producto en esta versión.
+end note
+
+@enduml

@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RolUsuario {
+  DUENO
+  CAJERO
+  REPARTIDOR
+  CLIENTE
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  EN_PREPARACION
+  LISTO_PARA_ENTREGAR
+  EN_CAMINO
+  ENTREGADO
+  CANCELADO
+  ENTREGA_FALLIDA
+}
+
+enum MetodoPago {
+  EFECTIVO
+  QR
+  TRANSFERENCIA
+}
+
+enum EstadoPago {
+  PENDIENTE
+  CONFIRMADO
+  FALLIDO
+  REEMBOLSADO
+}
+
+enum EstadoVenta {
+  PENDIENTE
+  COMPLETADA
+  CANCELADA
+}
+
+model Usuario {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  email     String     @unique
+  password  String
+  rol       RolUsuario
+  activo    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  repartidor Repartidor?
+
+  @@map("usuarios")
+}
+
+model Cliente {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  telefono  String   @unique
+  direccion String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pedidos Pedido[]
+
+  @@map("clientes")
+}
+
+model Repartidor {
+  id                Int      @id @default(autoincrement())
+  usuarioId         Int?     @unique
+  nombre            String
+  telefono          String
+  estadoDisponible  Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  usuario Usuario? @relation(fields: [usuarioId], references: [id])
+  pedidos Pedido[]
+
+  @@map("repartidores")
+}
+
+model Producto {
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  categoria        String
+  precio           Decimal   @db.Decimal(10, 2)
+  stock            Int       @default(0)
+  fechaVencimiento DateTime?
+  activo           Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  detalles PedidoDetalle[]
+
+  @@map("productos")
+}
+
+model Pedido {
+  id               Int          @id @default(autoincrement())
+  clienteId         Int
+  repartidorId      Int?
+  fechaHora         DateTime     @default(now())
+  direccionEntrega  String
+  estado            EstadoPedido @default(PENDIENTE)
+  total             Decimal      @default(0) @db.Decimal(10, 2)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  cliente    Cliente     @relation(fields: [clienteId], references: [id])
+  repartidor Repartidor? @relation(fields: [repartidorId], references: [id])
+  detalles   PedidoDetalle[]
+  pago       Pago?
+  venta      Venta?
+
+  @@map("pedidos")
+}
+
+model PedidoDetalle {
+  id             Int     @id @default(autoincrement())
+  pedidoId       Int
+  productoId     Int
+  cantidad       Int
+  precioUnitario Decimal @db.Decimal(10, 2)
+  subtotal       Decimal @db.Decimal(10, 2)
+
+  pedido   Pedido   @relation(fields: [pedidoId], references: [id])
+  producto Producto @relation(fields: [productoId], references: [id])
+
+  @@map("pedido_detalles")
+}
+
+model Pago {
+  id         Int        @id @default(autoincrement())
+  pedidoId   Int        @unique
+  metodo     MetodoPago
+  monto      Decimal    @db.Decimal(10, 2)
+  estadoPago EstadoPago @default(PENDIENTE)
+  fechaPago  DateTime?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
+  venta  Venta?
+
+  @@map("pagos")
+}
+
+model Venta {
+  id          Int         @id @default(autoincrement())
+  pedidoId    Int         @unique
+  pagoId      Int?        @unique
+  fechaVenta  DateTime    @default(now())
+  montoTotal  Decimal     @db.Decimal(10, 2)
+  estadoVenta EstadoVenta @default(PENDIENTE)
+  comprobante String?
+
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
+  pago   Pago?   @relation(fields: [pagoId], references: [id])
+
+  @@map("ventas")
+}

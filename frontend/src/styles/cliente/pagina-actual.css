@@ -1,0 +1,12 @@
+.pagina-actual {
+  padding: 16px 16px 8px 16px;
+  background-color: transparent; /* Eliminamos fondos pesados */
+}
+
+.pagina-actual h1 {
+  font-size: 26px;
+  font-weight: 800; /* Texto bien grueso e imponente */
+  color: #3c0d02; /* Azul oscuro casi negro, ultra elegante */
+  letter-spacing: -0.5px; /* Junta las letras un poquitito estilo premium */
+  margin: 0;
+}

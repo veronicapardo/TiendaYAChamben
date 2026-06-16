@@ -1,0 +1,185 @@
+/* =======================================================
+   CONTENEDOR DE LA CARD DEL CARRITO
+   ======================================================= */
+.carrito-item {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+}
+
+/* Asignación automática de los bordes sutiles de colores del Figma */
+.productos-carrito > div:nth-child(4n+1) .carrito-item,
+.carrito-item:nth-child(4n+1) { border: 1.5px solid #3b82f6; } /* Azul */
+
+.productos-carrito > div:nth-child(4n+2) .carrito-item,
+.carrito-item:nth-child(4n+2) { border: 1.5px solid #22c55e; } /* Verde */
+
+.productos-carrito > div:nth-child(4n+3) .carrito-item,
+.carrito-item:nth-child(4n+3) { border: 1.5px solid #f97316; } /* Naranja */
+
+.productos-carrito > div:nth-child(4n+4) .carrito-item,
+.carrito-item:nth-child(4n+4) { border: 1.5px solid #a855f7; } /* Morado */
+
+/* =======================================================
+   IMAGEN DEL PRODUCTO (ADAPTACIÓN ESTRICTA)
+   ======================================================= */
+.carrito-item img {
+  width: 55px !important;
+  height: 55px !important;
+  object-fit: contain; /* Obliga a la imagen desproporcionada a encajar */
+  border-radius: 8px;
+  background-color: #ffffff;
+  flex-shrink: 0; /* Evita que la imagen se aplaste si el texto es largo */
+}
+
+/* =======================================================
+   COLUMNA CENTRAL: DETALLES Y CONTADOR
+   ======================================================= */
+.carrito-info {
+  flex: 1; /* Ocupa todo el espacio intermedio disponible */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.carrito-info h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.carrito-info p {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f97316; /* Color naranja del precio individual */
+  margin: 0;
+}
+
+/* =======================================================
+   CONTADOR DE CANTIDAD DE PRODUCTOS (- 1 +)
+   ======================================================= */
+.contador {
+  display: flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  border-radius: 20px;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 2px;
+}
+
+.contador button {
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.contador button:hover {
+  background-color: #cbd5e1;
+}
+
+.contador span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  padding: 0 8px;
+  min-width: 14px;
+  text-align: center;
+}
+
+/* Botón basurero discreto */
+.btn-eliminar {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.btn-eliminar:hover {
+  color: #ef4444;
+}
+
+.carrito-total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  padding-left: 8px;
+}
+
+.carrito-total strong {
+  font-size: 14px;
+  font-weight: 800;
+  color: #7a2204; 
+  white-space: nowrap;
+}
+
+.carrito-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.carrito-info h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.carrito-info p {
+  margin: 0;
+  color: #666;
+}
+
+.contador {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.contador button {
+  border: none;
+
+  background: #f08200;
+
+  color: white;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.carrito-total strong {
+  font-size: 16px;
+}

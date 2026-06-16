@@ -1,0 +1,160 @@
+@startuml
+title Diagrama de Clases — Sistema Tienda Ya
+
+package "Acceso" {
+  class Usuario {
+    - idUsuario: int
+    - nombre: String
+    - contraseña: String
+    - rol: String
+    - estadoActivo: boolean
+    + iniciarSesion(): void
+    + cerrarSesion(): void
+    + verificarCredenciales(): boolean
+    + cambiarContraseña(): void
+    + desactivarUsuario(): void
+  }
+}
+
+package "Personas" {
+  class Cliente {
+    - idCliente: int
+    - nombre: String
+    - telefono: String
+    - direccion: String
+    + registrarCliente(): void
+    + actualizarDatos(): void
+    + realizarPedido(): Pedido
+    + confirmarRecepcion(): void
+  }
+
+  class Cajero {
+    - idCajero: int
+    - nombre: String
+    - telefono: String
+    - turnoActivo: boolean
+    + registrarVenta(): void
+    + procesarPago(): void
+    + registrarPedidoTelefonico(): void
+    + generarComprobante(): void
+    + realizarCierreCaja(): void
+    + buscarClientePorTelefono(): Cliente
+  }
+
+  class Repartidor {
+    - idRepartidor: int
+    - nombre: String
+    - telefono: String
+    - estadoDisponible: boolean
+    + aceptarEntrega(): void
+    + entregarPedido(): void
+    + registrarCobroEfectivo(): void
+    + reportarIncidencia(): void
+  }
+}
+
+package "Operaciones" {
+  class Pedido {
+    - idPedido: int
+    - fechaHora: DateTime
+    - direccionEntrega: String
+    - estado: String
+    - total: decimal
+    + agregarProducto(producto: Producto, cantidad: int): void
+    + quitarProducto(producto: Producto): void
+    + calcularTotal(): decimal
+    + confirmarPedido(): void
+    + actualizarEstado(estado: String): void
+    + cancelarPedido(): void
+  }
+
+  class Pago {
+    - idPago: int
+    - metodo: String
+    - monto: decimal
+    - estadoPago: String
+    - fechaPago: DateTime
+    + procesarPago(): void
+    + confirmarPago(): void
+    + marcarPendiente(): void
+    + registrarCobro(): void
+    + generarComprobante(): void
+  }
+
+  class Venta {
+    - idVenta: int
+    - fechaVenta: DateTime
+    - montoTotal: decimal
+    - estadoVenta: String
+    - comprobante: String
+    + registrarVenta(): void
+    + generarComprobante(): void
+    + asociarPago(pago: Pago): void
+    + completarVenta(): void
+  }
+
+  class CierreCaja {
+    - idCierre: int
+    - fecha: Date
+    - totalEfectivo: decimal
+    - totalQR: decimal
+    - totalTransferencia: decimal
+    - totalGeneral: decimal
+    - diferencia: decimal
+    - usuarioCierre: String
+    + calcularTotales(): void
+    + registrarCierre(): void
+    + calcularDiferencia(): decimal
+    + generarResumen(): void
+  }
+}
+
+package "Inventario" {
+  class Producto {
+    - idProducto: int
+    - nombre: String
+    - categoria: String
+    - precio: decimal
+    - stock: int
+    - stockMinimo: int
+    - fechaVencimiento: Date
+    + verificarDisponibilidad(cantidad: int): boolean
+    + actualizarStock(cantidad: int): void
+    + obtenerPrecio(): decimal
+    + marcarVencido(): void
+    + emitirAlertaStock(): void
+    + emitirAlertaVencimiento(): void
+  }
+
+  class EntradaMercaderia {
+    - idEntrada: int
+    - fecha: Date
+    - cantidad: int
+    - observacion: String
+    + registrarEntrada(): void
+    + actualizarInventario(): void
+  }
+}
+
+' Relaciones de acceso
+Usuario "1" -- "0..1" Cliente : es
+Usuario "1" -- "0..1" Cajero : es
+Usuario "1" -- "0..1" Repartidor : es
+
+' Relaciones de personas con operaciones
+Cliente "1" -- "0..*" Pedido : realiza
+Cajero "1" -- "0..*" Pedido : registra
+Cajero "1" -- "0..*" Venta : registra
+Cajero "1" -- "0..*" CierreCaja : realiza
+Pedido "0..1" -- "0..1" Repartidor : asignado a
+
+' Relaciones de operaciones
+Pedido "1" -- "1..*" Producto : contiene
+Pedido "1" -- "1" Venta : genera
+Pedido "1" -- "1" Pago : registra
+Venta "1" -- "1" Pago : respaldada por
+
+' Relaciones de inventario
+EntradaMercaderia "1" -- "1" Producto : actualiza
+
+@enduml

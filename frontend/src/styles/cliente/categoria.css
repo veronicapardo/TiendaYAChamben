@@ -1,0 +1,35 @@
+.categorias {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  overflow-x: auto; /* Permite deslizar hacia los lados de forma fluida en celulares */
+  scrollbar-width: none; /* Oculta la barra de scroll tosca en Firefox */
+}
+
+.categorias::-webkit-scrollbar {
+  display: none; /* Oculta la barra de scroll tosca en Chrome/Safari */
+}
+
+.categorias button {
+  background-color: #f1f5f9; /* Fondo gris pastel suave */
+  color: #64748b; /* Texto gris intermedio */
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 20px; /* Forma de píldora o cápsula como el Figma */
+  white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Efecto visual al pasar el mouse o cuando simule estar activo */
+.categorias button:hover {
+  background-color: #ff7a00; /* Pasa a tu color naranja de marca */
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.2);
+}
+.categoria-btn.activo {
+  background-color: #f08200;
+  color: white;
+}

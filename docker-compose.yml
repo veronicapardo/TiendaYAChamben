@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: postgres-tiendaya
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: tiendaya
+    ports:
+      - "5433:5432"
+    volumes:
+      - tiendaya-postgres-data:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-tiendaya
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: test
+    ports:
+      - "5051:80"
+    depends_on:
+      - db
+
+volumes:
+  tiendaya-postgres-data:

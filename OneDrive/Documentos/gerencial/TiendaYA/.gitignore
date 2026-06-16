@@ -1,0 +1,29 @@
+# Dependencias Node
+node_modules/
+
+# Compilación TypeScript
+dist/
+
+# Variables de entorno
+.env
+backend/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Visual Studio / .NET antiguo
+bin/
+obj/
+.vs/
+
+# VS Code local
+.vscode/
+
+# Archivos temporales
+*.log

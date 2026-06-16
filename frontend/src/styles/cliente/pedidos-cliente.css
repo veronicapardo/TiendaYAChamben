@@ -1,0 +1,237 @@
+/* ==========================================================================
+   Contenedor de la Página Principal
+   ========================================================================== */
+.pedidos-cliente {
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px; /* Consistencia de la vista mobile */
+  margin: 0 auto;
+  padding: 16px 20px 100px 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #ffffff;
+}
+
+.cliente-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   Pestañas de Filtros de Pedidos (Top Tabs)
+   ========================================================================== */
+.pedidos-tabs {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  overflow-x: auto; /* Scroll horizontal si los nombres se desbordan */
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+}
+
+.pedidos-tabs::-webkit-scrollbar {
+  display: none; /* Carrusel de pestañas limpio sin barra molesta */
+}
+
+.pedidos-tabs button {
+  flex: 1;
+  white-space: nowrap;
+  height: 34px;
+  padding: 0 16px;
+  border: 1.5px solid #4a4a4a;
+  border-radius: 14px;
+  background-color: #ffffff;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Estado activo de la pestaña seleccionada */
+.pedidos-tabs button.activo {
+  background-color: #f09200;
+  border-color: #f09200;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Sección Lista de Pedidos (Contenedor vertical)
+   ========================================================================== */
+.pedidos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Estilos Estructurales para <PedidoCard /> (Para que los uses dentro)
+   ========================================================================== */
+.pedido-card-contenedor {
+  border: 1.5px solid #9e9e9e;
+  border-radius: 16px;
+  background-color: #ffffff;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Cabecera interna gris del pedido abierto */
+.pedido-card-header-abierto {
+  background-color: #dedede;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #333333;
+}
+
+/* Si el pedido está cerrado (Borde simple blanco y texto verde de entrega) */
+.pedido-card-header-cerrado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.estado-texto-camino {
+  color: #008cff;
+  font-weight: bold;
+}
+
+.estado-texto-entregado {
+  color: #2ca82c;
+  font-weight: bold;
+}
+
+/* Cuerpo de productos del pedido */
+.pedido-card-productos {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.producto-fila-mini {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Línea de Tiempo de Estado (Stepper de Progreso)
+   ========================================================================== */
+.pedido-progreso-stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 12px 6px;
+  margin: 12px 0;
+}
+
+/* La línea gris que une todos los círculos por detrás */
+.pedido-progreso-stepper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background-color: #7a7a7a;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2; /* Por encima de la línea divisoria */
+  font-size: 10px;
+  color: #333333;
+  text-align: center;
+}
+
+/* El círculo del icono */
+.step-icono {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #7a7a7a; /* Color por defecto inactivo */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Variaciones de colores según el estado real */
+.step-item.completado .step-icono {
+  background-color: #f09200; /* Naranja de progreso */
+}
+
+.step-item.actual .step-icono {
+  background-color: #a62b2b; /* Color vino/oscuro si está en camino actual */
+}
+
+.step-item.gris-recibido .step-icono {
+  background-color: #b5b5b5; /* Gris suave final */
+}
+
+/* ==========================================================================
+   Bloque del Botón de Cancelación Inferior
+   ========================================================================== */
+.pedido-card-footer {
+  background-color: #dedede;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-cancelar-pedido {
+  background-color: #c95d5d;
+  color: white;
+  border: 1.5px solid #8f3b3b;
+  border-radius: 12px;
+  padding: 6px 24px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-cancelar-pedido:hover {
+  opacity: 0.9;
+}
+
+.cliente-mensaje {
+  width: min(760px, calc(100% - 32px));
+  margin: 14px auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.cliente-mensaje.exito {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.cliente-mensaje.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}

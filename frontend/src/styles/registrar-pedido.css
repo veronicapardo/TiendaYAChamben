@@ -1,0 +1,159 @@
+.pedido-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr 1.15fr 0.9fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.pedido-cliente-panel h2 {
+  font-size: 22px;
+}
+
+.tipo-entrega {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tipo-entrega button {
+  height: 42px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.tipo-entrega button.active {
+  background: #fff7ed;
+  color: #ff8300;
+  border-color: #ff8300;
+}
+
+.pedido-input,
+.pedido-textarea,
+.pedido-input-icon {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+}
+
+.pedido-input {
+  height: 40px;
+  padding: 0 12px;
+  outline: none;
+}
+
+.pedido-input-icon {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  color: #64748b;
+}
+
+.pedido-input-icon input {
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.pedido-textarea {
+  min-height: 84px;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+}
+
+.pedido-doble-campo {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 10px;
+}
+
+.pedido-title-con-estado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pedido-title-con-estado span {
+  background: #fff7ed;
+  color: #f97316;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.pedido-total-parcial {
+  border-top: 1px dashed #cbd5e1;
+  margin-top: 16px;
+  padding-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  font-weight: 900;
+}
+
+.pedido-total-parcial span {
+  color: #475569;
+}
+
+.pedido-total-parcial strong {
+  color: #020617;
+}
+
+.pedido-textarea-interna {
+  min-height: 110px;
+}
+
+.pedido-nota {
+  margin: 8px 0 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.pedido-info-box {
+  margin-top: 14px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.btn-guardar-pedido {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  border-radius: 12px;
+  border: 1px solid #94a3b8;
+  background: white;
+  color: #334155;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-guardar-pedido:hover {
+  background: #f8fafc;
+}

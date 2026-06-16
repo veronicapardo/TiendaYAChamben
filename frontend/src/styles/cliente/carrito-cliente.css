@@ -1,0 +1,300 @@
+/* =======================================================
+   CONTENEDOR PRINCIPAL ESTILO CELULAR (FIGMA)
+   ======================================================= */
+.carrito-cliente-page {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fbfbfb;
+  min-height: 100vh;
+  padding: 16px 20px 120px 20px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =======================================================
+   SECCIÓN SUGERENCIAS: CAJA DEGRADADA DE FONDO
+   ======================================================= */
+.sugerencias-carrito {
+  background: linear-gradient(180deg, #fffbeb 0%, #ffedd5 100%);
+  border-radius: 24px;
+  padding: 16px 14px;
+  margin: 16px 0;
+  box-shadow: 0 4px 20px rgba(255, 122, 0, 0.05);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden; 
+}
+
+.sugerencias-carrito h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2b1810;
+  margin: 0 0 12px 4px;
+}
+
+/* Tira horizontal con scroll manual libre de saltos */
+.sugerencias-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  width: 100%;
+  scrollbar-width: none; /* Oculta en Firefox */
+  -webkit-overflow-scrolling: touch; /* Scroll fluido en iOS */
+}
+
+.sugerencias-scroll::-webkit-scrollbar {
+  display: none; /* Oculta en Chrome/Safari */
+}
+
+/* =======================================================
+   RESETEO ENÉRGICO DEL CONTENEDOR DE LA TARJETA SUGERIDA
+   ======================================================= */
+.producto-sugerido {
+  flex: 0 0 150px; /* Ancho horizontal compacto de prod */
+  box-sizing: border-box;
+}
+
+/* Forzado directo sobre la caja del componente (mantiene la horizontalidad) */
+.producto-sugerido > div,
+.producto-sugerido > article {
+  background-color: #ffffff !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  
+  /* Aniquilamos altos masivos heredados */
+  width: 100% !important;
+  height: 80px !important;       
+  min-height: 80px !important;   
+  max-height: 80px !important;
+  
+  /* Forzado del flujo en fila */
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 8px 12px !important;
+  gap: 10px !important;
+}
+
+/* Ajuste de la imagen para que no se deforme al colapsar la caja */
+.producto-sugerido img {
+  width: 45px !important;
+  height: 45px !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important; 
+}
+
+/* Asegurar textos en una sola línea con puntos suspensivos si es muy largo */
+.producto-sugerido h3,
+.producto-sugerido [class*="titulo"],
+.producto-sugerido [class*="nombre"] {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.producto-sugerido p,
+.producto-sugerido [class*="precio"] {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #f97316 !important;
+  margin: 2px 0 0 0 !important;
+}
+
+/* Estilización final limpia del botón "Añadir" */
+.producto-sugerido button,
+.producto-sugerido [class*="btn"],
+.producto-sugerido [class*="add"] {
+  display: block !important;
+  visibility: visible !important;
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border-radius: 20px !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: initial !important;
+  margin: 0 0 0 auto !important; /* Lo empuja elegantemente hacia la derecha */
+  background: #ff7a00 !important; /* Naranja exacto de tu paleta */
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(255, 122, 0, 0.15) !important;
+}
+
+.producto-sugerido button:hover {
+  background: #e06b00 !important;
+}
+
+/* Ocultar elementos sobrantes que rompan el diseño compacto horizontal */
+.producto-sugerido [class*="dispon"], 
+.producto-sugerido span:not([class*="precio"]),
+.producto-sugerido [class*="contador"],
+.producto-sugerido [class*="selector-cantidad"] {
+  display: none !important;
+}
+
+/* =======================================================
+   SECCIÓN "TU CARRITO" (CÁPSULAS CON BORDES DE COLORES)
+   ======================================================= */
+.carrito-cliente-page > strong {
+  display: block;
+  font-size: 16px;
+  color: #1e293b;
+  margin: 24px 0 8px 4px;
+}
+
+.productos-carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Control de envolturas extras que pueda generar el map */
+.productos-carrito > div {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+/* --- ASIGNACIÓN DINÁMICA DE COLORES DE BORDE AL LISTADO INFERIOR --- */
+.productos-carrito > div:nth-child(4n+1) article { border: 1.5px solid #3b82f6; } /* Azul */
+.productos-carrito > div:nth-child(4n+2) article { border: 1.5px solid #22c55e; } /* Verde */
+.productos-carrito > div:nth-child(4n+3) article { border: 1.5px solid #f97316; } /* Naranja */
+.productos-carrito > div:nth-child(4n+4) article { border: 1.5px solid #a855f7; } /* Morado */
+
+/* =======================================================
+   BLOC DE TOTALES
+   ======================================================= */
+.carrito-cliente-page strong[style*="display: block"] {
+  display: flex !important;
+  justify-content: flex-end;
+  background-color: #ff7a00;
+  color: #ffffff !important;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  width: fit-content;
+  align-self: flex-end;
+  margin-right: 0;
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.2);
+}
+
+.carrito-cliente-page p span[style*="color"] {
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* =======================================================
+   METODOS DE PAGO: INTERFAZ DE BOTONES VERTICALES
+   ======================================================= */
+.carrito-cliente-page > p {
+  font-size: 14px;
+  color: #475569;
+  font-weight: 500;
+  margin: 16px 0 10px 4px;
+}
+
+.metodos-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.metodo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #ffffff;
+  padding: 14px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: background-color 0.2s ease;
+}
+
+.metodo-item:hover {
+  background-color: #f8fafc;
+}
+
+.metodo-item input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  outline: none;
+  background-color: #ffffff;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.metodo-item input[type="radio"]:checked {
+  border-color: #ff7a00;
+}
+
+.metodo-item input[type="radio"]:checked::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff7a00;
+}
+
+.metodo-item span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* =======================================================
+   BOTÓN CHECKOUT
+   ======================================================= */
+.checkout {
+  width: 100%;
+}
+
+.btn-checkout {
+  width: 100%;
+  background: #7a2204;
+  color: #ffffff;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(122, 34, 4, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-checkout:hover:not(:disabled) {
+  background: #5c1902;
+  transform: translateY(-1px);
+}
+
+.btn-checkout:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+}

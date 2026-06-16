@@ -1,0 +1,28 @@
+# Java / Spring Boot
+target/
+*.class
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Node / TypeScript anterior
+node_modules/
+backend/node_modules/
+backend/dist/
+backend/.env
+
+# Variables sensibles
+.env
+*.env
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

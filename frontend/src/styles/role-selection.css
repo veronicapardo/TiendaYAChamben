@@ -1,0 +1,97 @@
+.role-page {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Mantiene la proporción real de Figma: 1440 x 1024 */
+.role-frame {
+  position: relative;
+  width: min(100vw, calc(100vh * 1.40625));
+  aspect-ratio: 1440 / 1024;
+  background-image: url("../assets/decor/Cajero.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Logo real colocado encima */
+.role-logo-overlay {
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Texto más grande y en negrilla */
+.role-title-overlay {
+  position: absolute;
+  top: 27%;
+  left: 22%;
+  z-index: 5;
+  margin: 0;
+  font-size: clamp(18px, 2.2vw, 34px);
+  font-weight: 800;
+  color: rgba(80, 67, 25, 0.78);
+  text-align: left;
+  pointer-events: none;
+}
+
+/* Botones invisibles sobre las tarjetas */
+.role-hotspot {
+  position: absolute;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 18px;
+}
+
+/* Activa esto solo para acomodar posiciones */
+/*
+.role-hotspot {
+  background: rgba(255, 0, 0, 0.25);
+}
+*/
+
+.hotspot-cliente {
+  left: 8.1%;
+  top: 37.3%;
+  width: 17.5%;
+  height: 23.5%;
+}
+
+.hotspot-cajero {
+  left: 29.8%;
+  top: 37.3%;
+  width: 18.3%;
+  height: 23.5%;
+}
+
+.hotspot-delivery {
+  left: 52.1%;
+  top: 37.3%;
+  width: 17.8%;
+  height: 23.5%;
+}
+
+.hotspot-admin {
+  left: 74%;
+  top: 37.3%;
+  width: 17.2%;
+  height: 23.5%;
+}
+
+.role-hotspot:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
